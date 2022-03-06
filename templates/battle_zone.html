@@ -166,6 +166,127 @@
             background-color: #F3D283;
             font-weight: bold;
         }
+
+        .comment-box {
+            display: none;
+            width: 50%;
+            border: 1px solid #ccc;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 1px rgb(165, 165, 165);
+            margin: auto;
+        }
+
+        .comment-box p {
+            text-align: left;
+            font-size: 28px;
+            color: #777;
+        }
+
+        .comment-form input, .comment-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            box-sizing: border-box;
+            outline: none;
+            font-size: 18px;
+            border: 1px solid #ddd;
+            color: #777;
+        }
+
+        .comment-form  .cmt-btn{
+            margin: 10px 0;
+            border: none;
+            background-color: #d0d0d0;
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 3px;
+            color: #444;
+            width: 250px;
+            display: block;
+            margin: auto;
+        }
+
+        .cmt-btn {
+            width: 250px;
+            display: block;
+            margin: auto;
+        }
+
+        .cmt-btn:hover {
+            color: white;
+            background-color: #444;
+            width: 250px;
+            display: block;
+            margin: auto;
+        }
+
+        #comment-lists {
+            width: 40%;
+            margin: auto;
+        }
+
+        ol, ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            outline: 0;
+        }
+
+        ol#comment-lists > li {
+            position: relative;
+            padding: 18px 0;
+        }
+
+        ol#comment-lists > li div.profile-image {
+            top: 20px;
+            position: absolute;
+            left: 20px;
+        }
+
+        .profile-icon {
+            width: 50px;
+            height: 50px;
+        }
+
+        li div.name.time {
+            margin-left: 120px;
+            margin-bottom: 6px;
+        }
+
+        .nick-name {
+            font-size: 25px;
+        }
+
+        .reply, .delete {
+            float: right;
+        }
+
+        .reply {
+            margin-left: 20px;
+        }
+
+        #comment-array {
+            width: 40%;
+            display: block;
+            margin: auto;
+            margin-top: 20px;
+        }
+
+        #comment-array > li {
+            list-style: none;
+            float: right;
+            margin-left: 20px;
+
+        }
+
+        .cmt-line {
+            width: 50%;
+        }
+
+
+
     </style>
 
     <script>
@@ -223,6 +344,16 @@
                 }
             });
         }
+
+        function openClose() {
+            if ($(".comment-box").css("display") == "block") {
+            $(".comment-box").hide();
+            $("#tr_btn").text("토론참여창 열기");
+            } else {
+            $(".comment-box").show();
+            $("#tr_btn").text("토론참여창 닫기");
+            }
+            }
     </script>
 </head>
 
@@ -248,7 +379,7 @@
         <button class="first" onclick="select_btn1('깻잎 논쟁!')">선택</button>
         <button class="third" onclick="select_btn2('깻잎 논쟁!')">선택</button>
         <br>
-        <button id="tr_btn" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal"
+        <button onclick="openClose()" id="tr_btn" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal"
                 data-whatever="@fat">토론 참여하기
         </button>
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -292,6 +423,88 @@
 
     </div>
 
+
+    <div class="comment-box">
+        <div class="modal-header">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inline1"
+                                   value="option1">
+                            <label id="pt_label" class="form-check-label" for="inline1">깻잎을 떼어 줘도 된다</label>
+                        </div>
+                        <h5 class="modal-title" id="exampleModalLabel">VS</h5>
+                        <div id="form-check" class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inline2"
+                                   value="option2">
+                            <label id="pt_label2" class="form-check-label" for="inline2">깻잎을 떼어 주면 안된다</label>
+                        </div>
+        </div>
+        <form class="comment-form">
+            <input type="text" placeholder="닉네임을 입력해주세요.">
+            <textarea rows="3" placeholder="해당 선택지에 대한 의견을 입력해주세요."></textarea>
+            <button class="cmt-btn" type="submit">토론참여 완료하기</button>
+        </form>
+    </div>
+    <ul id="comment-array">
+        <li>동의 순</li>
+        <li>최신 순</li>
+    </ul>
+    <hr class="cmt-line">
+    <ol id="comment-lists">
+        <li class="comment-list">
+            <div class="profile-image">
+                <img class="profile-icon" src="https://icon-library.com/images/anonymous-icon/anonymous-icon-28.jpg" alt="">
+            </div>
+            <div class="name time">
+                <strong class="nick-name">익명1</strong>
+                <time></time>
+                <div class="comment-content">
+                    절대절대절대불가
+                </div>
+                <div>
+                    <a class="reply" href="#">반박하기</a>
+                </div>
+                <div>
+                    <a class="delete" href="#">삭제</a>
+                </div>
+            </div>
+        </li>
+        <li class="comment-list">
+            <div class="profile-image">
+                <img class="profile-icon" src="https://icon-library.com/images/anonymous-icon/anonymous-icon-28.jpg" alt="">
+            </div>
+            <div class="name time">
+                <strong class="nick-name">익명2</strong>
+                <time></time>
+                <div class="comment-content">
+                    왜 안돼?
+                </div>
+                <div>
+                    <a class="reply" href="#">반박하기</a>
+                </div>
+                <div>
+                    <a class="delete" href="#">삭제</a>
+                </div>
+            </div>
+            <li class="comment-list">
+            <div class="profile-image">
+                <img class="profile-icon" src="https://icon-library.com/images/anonymous-icon/anonymous-icon-28.jpg" alt="">
+            </div>
+            <div class="name time">
+                <strong class="nick-name">익명3</strong>
+                <time></time>
+                <div class="comment-content">
+                    이게 왜 문제
+                </div>
+                <div>
+                    <a class="reply" href="#">반박하기</a>
+                </div>
+                <div>
+                    <a class="delete" href="#">삭제</a>
+                </div>
+            </div>
+        </li>
+        </li>
+    </ol>
     </body>
 
     </html>
