@@ -80,17 +80,30 @@
             font-size: 13px;
         }
 
-        /*생성하기버튼*/
+        /*생성하기, 닫기버튼*/
+
         .btn {
-            width: 500px;
+            width: 100px;
             margin: auto;
             margin-top: 30px;
             background: #F3D283;
             border: 0px;
-            font-family: 'Jua', sans-serif;
+        }
+
+        .btn2 {
+            width: 100px;
+            text-align: center;
+            margin: auto;
+            margin-top: 30px;
+            background: #F3D283;
+            border: 0px;
         }
 
         .btn:hover {
+            background-color: lightgray;
+        }
+
+        .btn2:hover {
             background-color: lightgray;
         }
 
@@ -181,7 +194,11 @@
 </div>
 
 <!--/*생성하기 버튼*/-->
-<a href="/" button type="button" class="btn btn-secondary btn-lg btn-block">생성하기</button></a>
+<div id="btn_group">
+    <a href="/" button type="button" class="btn btn-secondary btn-lg btn-block">생성하기</button></a>
+    <button type="button" class="btn2 btn-secondary btn-lg btn-block">닫기</button>
+</div>
+<!--<a href="/" button type="button" class="btn btn-secondary btn-lg btn-block">생성하기</button></a>-->
 
 
 </body>
