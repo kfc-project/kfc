@@ -12,9 +12,33 @@ db = client.dbsparta
 def home():
     return render_template('main.html')
 
+@app.route('/card', methods=["POST"])
+def card_post():
+    title_receive = request.form['title_give']
+    img_receive = request.form['img_give']
+    link_receive = request.form['link_give']
+    num_receive = request.form['num_give']
+
+    doc = {
+        'title': title_receive,
+        'img': img_receive,
+        'link': link_receive,
+        'num': num_receive
+    }
+
+    db.cards.insert_one(doc)
+
+    return jsonify({'msg': '저장완료'})
+
+@app.route('/card', methods=["GET"])
+def card_get():
+    return jsonify({'msg': 'GET 연결 완료!'})
+
 @app.route('/battle_create')
 def battle_create():
-    return render_template('battle_create.html')
+    sample_receive = request.form['sample_give']
+    print(sample_receive)
+    return jsonify({'msg': 'POST 연결 완료!'})
 
 @app.route('/battle_zone')
 def battle_zone():
@@ -47,7 +71,6 @@ def select_btn2():
 def show_bar():
     bar = list(db.battle.find({'title': '깻잎 논쟁!'}, {'_id': False}))
     return jsonify({'show_bars': bar})
-
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)

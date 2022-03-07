@@ -22,11 +22,14 @@
 
     <title>KFC | Keyboard Fight Club</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+          rel="stylesheet">
 
     <style>
         * {
-            font-family: 'Jua', sans-serif;
+            font-family: 'Noto Sans KR', sans-serif;
         }
 
         .wrap {
@@ -136,7 +139,7 @@
         .nav-item {
             float: left;
             margin-left: 50px;
-            color: white;
+            color: #1F1815;
             font-style: bold;
         }
 
@@ -230,7 +233,7 @@
 <body>
 
 <nav class="navbar">
-    <a class="navbar-brand" href="/" onclick="rogo"><b>KFC</b></a>
+    <a class="navbar-brand" href="/" onclick="rogo"><img src="{{url_for('static', filename='kfc_fin.png')}}" width="50%" height="20%"/></a>
     <div class="navbar-nav">
         <a href="/" class="nav-item nav-link active">토론장로비</a>
         <a href="{{url_for('battle_create')}}" class="nav-item nav-link">토론장생성하기</a>
