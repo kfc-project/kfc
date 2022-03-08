@@ -147,14 +147,14 @@
         });
 
         function listing() {
-            $('#cards-box').empty()
+
 
             $.ajax({
                 type: 'GET',
-                url: '/card',
+                url: '/api/sub_create',
                 data: {},
                 success: function (response) {
-                    let card = response['cars']
+                    let card = response['cards']
                     for (let i = 0; i < card.length; i++) {
                         let title = card[i]['title']
                         let cnt = card[i]['total_cnt']
@@ -166,7 +166,7 @@
                                                 <img class="card-img" src="${img}" alt="">
                                                 <div class="card-bottom container">
                                                     <p class="card-text, seenum"><span>조회수:<span id="result">${cnt}</span>회</span>
-                                                        <a button type="button" class="btndgo" style="cursor:pointer"
+                                                        <a type="button" class="btndgo" style="cursor:pointer"
                                                            href="{{url_for('battle_zone')}}"
                                                            onclick='count("plus")'>토론하러가기</button></a>
                                                     </p>
