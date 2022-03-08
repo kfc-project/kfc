@@ -7,6 +7,7 @@ client = MongoClient('mongodb+srv://test:sparta@Cluster0.d4msk.mongodb.net/Clust
 db = client.dbsparta
 
 
+
 # HTML 화면 보여주기
 @app.route('/')
 def home():
@@ -57,9 +58,9 @@ def show_bar():
 
 
 # main 토론장
-@app.route('/card', methods=['GET'])
+@app.route('/api/sub_create', methods=['GET'])
 def card_get():
-    card_list = list(db.battle.find({}, {'_id': False}))
+    card_list = list(db.create.find({}, {'_id': False}))
     return jsonify({'cards': card_list})
 
 
