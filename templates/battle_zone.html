@@ -314,8 +314,31 @@
                     alert(response["msg"]);
                     window.location.reload();
                 }
-    })
-}
+            })
+        }
+
+        function showReply() {
+            $.ajax({
+                type: "GET",
+                url: "/reply",
+                data: {},
+                success: function (response) {
+                    let replies = response['all_replies']
+                    for (let i = 0; i < replies.length; i++) {
+                        let Id = replies[i]['Id']
+                        let Comment = replies[i]['Comment']
+                        let like = replies[i]['like']
+
+
+                        let temp_html = ``
+
+
+                        $('#mt-2').append(temp_html)
+                    }
+                }
+            })
+        }
+
 
     </script>
 </head>
@@ -323,112 +346,117 @@
 
 <body>
 
-    <nav class="navbar">
-    <a class="navbar-brand" href="/" onclick="rogo"><img src="{{url_for('static', filename='kfc_fin.png')}}" width="50%" height="20%"/></a>
+<nav class="navbar">
+    <a class="navbar-brand" href="/" onclick="rogo"><img src="{{ url_for('static', filename='kfc_fin.png') }}"
+                                                         width="50%" height="20%"/></a>
     <div class="navbar-nav">
         <a href="/" class="nav-item nav-link active">토론장로비</a>
-        <a href="{{url_for('battle_create')}}" class="nav-item nav-link">토론장생성하기</a>
+        <a href="{{ url_for('battle_create') }}" class="nav-item nav-link">토론장생성하기</a>
     </div>
-    </nav>
+</nav>
 
-    <div class="wrap">
-        <h1 id="title">깻잎 논쟁!</h1>
-        <div class="gg-img"></div>
-            <div class="sec-title">
-                <p id="cont1">내 애인이 내 친구의 깻잎을 떼어줘도 된다</p>
-                <p id="cont2">내 애인이 내 친구의 깻잎을 떼어주면 안된다</p>
-            </div>
+<div class="wrap">
+    <h1 id="title">깻잎 논쟁!</h1>
+    <div class="gg-img"></div>
+    <div class="sec-title">
+        <p id="cont1">내 애인이 내 친구의 깻잎을 떼어줘도 된다</p>
+        <p id="cont2">내 애인이 내 친구의 깻잎을 떼어주면 안된다</p>
+    </div>
 
-        <div class="progress_wrap" id="progress_bar">
+    <div class="progress_wrap" id="progress_bar">
+    </div>
+    <button class="first" onclick="select_btn1('깻잎 논쟁!')">선택</button>
+    <button class="third" onclick="select_btn2('깻잎 논쟁!')">선택</button>
+    <br>
+    <button onclick="openClose()" id="tr_btn" type="button" class="btn btn-info">토론 참여하기!
+    </button>
+
+    <div id="reply_box" class="re-box2">
+        <div id="bg-com" class="card-header bg-light">
+            <i class="fa fa-comment fa"></i> 댓글
         </div>
-        <button class="first" onclick="select_btn1('깻잎 논쟁!')">선택</button>
-        <button class="third" onclick="select_btn2('깻잎 논쟁!')">선택</button>
-        <br>
-        <button onclick="openClose()" id="tr_btn" type="button" class="btn btn-info">토론 참여하기!
-        </button>
-
-        <div id="reply_box" class="re-box2">
-            <div id="bg-com" class="card-header bg-light">
-                <i class="fa fa-comment fa"></i> 댓글
-            </div>
-            <div id="bg-wt" class="card-body">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <div class="form-inline mb-2">
-                            <label for="replyId"><i class="fa fa-user-circle-o fa-2x"></i></label>
-                            <input type="text" class="form-control ml-2" placeholder="닉네임" id="replyId">
-                            <label for="replyPassword" class="ml-4"><i class="fa fa-unlock-alt fa-2x"></i></label>
-                            <input type="password" class="form-control ml-2" placeholder="비밀번호" id="replyPassword">
-                        </div>
-                        <textarea class="form-control" placeholder="내용" id="replyComment" rows="3"></textarea>
-                        <button type="button" id="q_btn" class="btn btn-info mt-3" onClick="addReply()">의견 남기기!</button>
-                    </li>
-                </ul>
-            </div>
+        <div id="bg-wt" class="card-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="form-inline mb-2">
+                        <label for="replyId"><i class="fa fa-user-circle-o fa-2x"></i></label>
+                        <input type="text" class="form-control ml-2" placeholder="닉네임" id="replyId">
+                        <label for="replyPassword" class="ml-4"><i class="fa fa-unlock-alt fa-2x"></i></label>
+                        <input type="password" class="form-control ml-2" placeholder="비밀번호" id="replyPassword">
+                    </div>
+                    <textarea class="form-control" placeholder="내용" id="replyComment" rows="3"></textarea>
+                    <button type="button" id="q_btn" class="btn btn-info mt-3" onClick="addReply()">의견 남기기!</button>
+                </li>
+            </ul>
+        </div>
     </div>
 
     <div class="container">
 
-                <div class="card-1">
-                    <div class="p-3">
-                        <h6>투기장on</h6>
-                    </div>
-                    <div class="mt-2">
-                        <div class="d-flex flex-row p-3"><img src="{{ url_for('static', filename='test.png') }}" width="40"
-                                                              height="40" class="rounded-circle mr-3">
-                            <div id="w-1000" class="w-100">
-                                <div class="d-flex justify-content-between align-items-center">
+        <div class="card-1">
+            <div class="p-3">
+                <h6>투기장on</h6>
+            </div>
+            <div class="mt-2">
+                <div class="d-flex flex-row p-3">
+                    <img src="{{ url_for('static', filename='test.png') }}" width="40" height="40"
+                         class="rounded-circle mr-3">
+                    <div id="w-1000" class="w-100">
+                        <div class="d-flex justify-content-between align-items-center">
                                     <div class="d-flex flex-row align-items-center"><span
                                             class="mr-2">김혁진</span> <small class="c-badge">Top
                                         Comment</small></div>
                                     <small>12h ago</small>
                                 </div>
-                                <p class="text-justify comment-text mb-0">흰쌀밥 위에 깻잎 싸악 올려서 먹으면 꿀맛!</p>
-                                <div class="hover-ef d-flex flex-row user-feed">
-                                    <span class="wish"><i class="fa fa-heartbeat mr-2"></i>100</span>
-                                    <span class="ml-3"><i class="fa fa-comments-o mr-2"></i>Reply</span>
-                                </div>
-                            </div>
+                        <p class="text-justify comment-text mb-0">흰쌀밥 위에 깻잎 싸악 올려서 먹으면 꿀맛!</p>
+                        <div class="hover-ef d-flex flex-row user-feed">
+                            <span class="wish"><i class="fa fa-heartbeat mr-2"></i>100</span>
+                            <span class="ml-3"><i class="fa fa-comments-o mr-2"></i>Reply</span>
                         </div>
-                        <div class="d-flex flex-row p-3"><img src="{{ url_for('static', filename='test.png') }}" width="40"
-                                                              height="40" class="rounded-circle mr-3">
-                            <div class="w-100">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="d-flex flex-row align-items-center"><span
-                                            class="mr-2">이레꾸</span>
-                                    </div>
-                                    <small>12h ago</small>
-                                </div>
-                                <p class="text-justify comment-text mb-0">깻잎을 떼어주는건 좀...</p>
-                                <div class="d-flex flex-row user-feed"><span class="wish"><i
-                                        class="fa fa-heartbeat mr-2"></i>32</span> <span class="ml-3"><i
-                                        class="fa fa-comments-o mr-2"></i>Reply</span></div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
+            </div>
+            <div class="mt-2">
+                <div class="d-flex flex-row p-3">
+                    <img src="{{ url_for('static', filename='test.png') }}" width="40" height="40"
+                         class="rounded-circle mr-3">
+                    <div id="w-1000" class="w-100">
+                        <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex flex-row align-items-center"><span
+                                            class="mr-2">김혁진</span> <small class="c-badge">Top
+                                        Comment</small></div>
+                                    <small>12h ago</small>
+                                </div>
+                        <p class="text-justify comment-text mb-0">흰쌀밥 위에 깻잎 싸악 올려서 먹으면 꿀맛!</p>
+                        <div class="hover-ef d-flex flex-row user-feed">
+                            <span class="wish"><i class="fa fa-heartbeat mr-2"></i>100</span>
+                            <span class="ml-3"><i class="fa fa-comments-o mr-2"></i>Reply</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-        <nav class="page" aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+    <nav class="page" aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 
 
 </div>
