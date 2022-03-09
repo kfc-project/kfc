@@ -20,7 +20,6 @@ def battle_create():
 def battle_zone():
     return render_template('battle_zone.html')
 
-
 # 왼쪽 '선택' 버튼을 눌렀을 시 작동
 @app.route('/api/select1', methods=['POST'])
 def select_btn1():
@@ -28,7 +27,7 @@ def select_btn1():
     target_title = db.battle.find_one({'title': title_receive})
 
     current_sel1 = target_title['sel_cnt1']
-    new_sel1 = current_sel1 + 1
+    new_sel1 = current_sel1+1
 
     db.battle.update_one({'title': title_receive}, {'$set': {'sel_cnt1': new_sel1}})
     return jsonify({'msg': '선택 완료'})
@@ -40,7 +39,7 @@ def select_btn2():
     target_title = db.battle.find_one({'title': title_receive})
 
     current_sel2 = target_title['sel_cnt2']
-    new_sel2 = current_sel2 + 1
+    new_sel2 = current_sel2+1
 
     db.battle.update_one({'title': title_receive}, {'$set': {'sel_cnt2': new_sel2}})
     return jsonify({'msg': '선택 완료'})
@@ -65,6 +64,7 @@ def sub_create():
     sub2_receive = request.form['sub2_give']
     img_receive = request.form['img_give']
 
+
     doc = {
         'title': title_receive,
         'subject1': sub1_receive,
@@ -78,14 +78,36 @@ def sub_create():
 
     return jsonify({'msg': '생성되었습니다.'})
 
-
 # 토론장 이미지 업로드 하기
-@app.route('/uploader', methods=['GET', 'POST'])
+@app.route('/uploader', methods=['GET','POST'])
 def uploader_file():
     if request.method == "POST":
         file = request.files['file']
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
         return '이미지 업로드 성공'
+
+# 댓글 DB 보내기
+@app.route('/reply', methods=['POST'])
+def write_reply():
+    Id_receive = request.form['Id_give']
+    Password_receive = request.form['Password_give']
+    Comment_receive = request.form['Comment_give']
+
+    doc = {
+        'Id': Id_receive,
+        'Password': Password_receive,
+        'Comment': Comment_receive,
+        'like': 0
+    }
+
+    db.reply.insert_one(doc)
+    return jsonify({'msg': '댓글 저장 완료!'})
+
+# 댓글 DB 가져오기
+@app.route('/reply', methods=['GET'])
+def read_replies():
+    replies = list(db.reply.find({}, {'_id': False}))
+    return jsonify({'all_replies': replies})
 
 
 if __name__ == '__main__':
