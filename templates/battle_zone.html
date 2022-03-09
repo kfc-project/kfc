@@ -309,7 +309,7 @@
             $.ajax({
                 type: "POST",
                 url: "/reply",
-                data: {Id_give: Id, Password_give: Password, Comment_give: Comment, like_give: like},
+                data: {Id_give: Id, Password_give: Password, Comment_give: Comment},
                 success: function (response) {
                     alert(response["msg"]);
                     window.location.reload();
@@ -414,7 +414,7 @@ $(document).ready(function () {
             <div class="p-3">
                 <h6>투기장on</h6>
             </div>
-            <div class="mt-2">
+            <div id="mt-2">
                 <div class="d-flex flex-row p-3">
                     <div id="w-1000" class="w-100">
                         <div class="d-flex justify-content-between align-items-center">
