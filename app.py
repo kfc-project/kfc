@@ -66,7 +66,7 @@ def select_btn2():
 
     db.battle.update_one({'title': title_receive}, {'$set': {'sel_cnt2': new_sel2}})
     return jsonify({'msg': '선택 완료'})
-
+# 댓글 DB 보내기
 @app.route('/reply', methods=['POST'])
 def write_reply():
     Id_receive = request.form['Id_give']
@@ -76,11 +76,19 @@ def write_reply():
     doc = {
         'Id': Id_receive,
         'Password': Password_receive,
-        'Comment': Comment_receive
+        'Comment': Comment_receive,
+        'like': 0
     }
 
     db.reply.insert_one(doc)
     return jsonify({'msg': '댓글 저장 완료!'})
+
+# 댓글 DB 가져오기
+@app.route('/reply', methods=['GET'])
+def read_replies():
+    replies = list(db.reply.find({}, {'_id': False}))
+    return jsonify({'all_replies': replies})
+
 
 @app.route('/api/showbar', methods=['GET'])
 def show_bar():
