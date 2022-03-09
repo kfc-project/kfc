@@ -67,6 +67,21 @@ def select_btn2():
     db.battle.update_one({'title': title_receive}, {'$set': {'sel_cnt2': new_sel2}})
     return jsonify({'msg': '선택 완료'})
 
+@app.route('/reply', methods=['POST'])
+def write_reply():
+    Id_receive = request.form['Id_give']
+    Password_receive = request.form['Password_give']
+    Comment_receive = request.form['Comment_give']
+
+    doc = {
+        'Id': Id_receive,
+        'Password': Password_receive,
+        'Comment': Comment_receive
+    }
+
+    db.reply.insert_one(doc)
+    return jsonify({'msg': '댓글 저장 완료!'})
+
 @app.route('/api/showbar', methods=['GET'])
 def show_bar():
     bar = list(db.battle.find({'title': '깻잎 논쟁!'}, {'_id': False}))

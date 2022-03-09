@@ -300,6 +300,23 @@
             }
         }
 
+        function addReply() {
+
+            let Id = $("#replyId").val();
+            let Password = $("#replyPassword").val();
+            let Comment = $("#replyComment").val();
+
+            $.ajax({
+                type: "POST",
+                url: "/reply",
+                data: {Id_give: Id, Password_give: Password, Comment_give: Comment},
+                success: function (response) {
+                    alert(response["msg"]);
+                    window.location.reload();
+                }
+    })
+}
+
     </script>
 </head>
 
@@ -343,8 +360,8 @@
                             <label for="replyPassword" class="ml-4"><i class="fa fa-unlock-alt fa-2x"></i></label>
                             <input type="password" class="form-control ml-2" placeholder="비밀번호" id="replyPassword">
                         </div>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                        <button type="button" id="q_btn" class="btn btn-info mt-3" onClick="javascript:addReply();">의견 남기기!</button>
+                        <textarea class="form-control" placeholder="내용" id="replyComment" rows="3"></textarea>
+                        <button type="button" id="q_btn" class="btn btn-info mt-3" onClick="addReply()">의견 남기기!</button>
                     </li>
                 </ul>
             </div>
