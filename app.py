@@ -80,5 +80,29 @@ def uploader_file():
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
         return '이미지 업로드 성공'
 
+# 댓글 DB 보내기
+@app.route('/reply', methods=['POST'])
+def write_reply():
+    Id_receive = request.form['Id_give']
+    Password_receive = request.form['Password_give']
+    Comment_receive = request.form['Comment_give']
+
+    doc = {
+        'Id': Id_receive,
+        'Password': Password_receive,
+        'Comment': Comment_receive,
+        'like': 0
+    }
+
+    db.reply.insert_one(doc)
+    return jsonify({'msg': '댓글 저장 완료!'})
+
+# 댓글 DB 가져오기
+@app.route('/reply', methods=['GET'])
+def read_replies():
+    replies = list(db.reply.find({}, {'_id': False}))
+    return jsonify({'all_replies': replies})
+
+
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
