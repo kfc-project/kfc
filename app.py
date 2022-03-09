@@ -66,6 +66,7 @@ def select_btn2():
 
     db.battle.update_one({'title': title_receive}, {'$set': {'sel_cnt2': new_sel2}})
     return jsonify({'msg': '선택 완료'})
+
 # 댓글 DB 보내기
 @app.route('/reply', methods=['POST'])
 def write_reply():
@@ -81,6 +82,7 @@ def write_reply():
     }
 
     db.reply.insert_one(doc)
+
     return jsonify({'msg': '댓글 저장 완료!'})
 
 # 댓글 DB 가져오기

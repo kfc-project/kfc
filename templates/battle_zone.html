@@ -317,7 +317,8 @@
             })
         }
 
-        function showReply() {
+        $(document).ready(function () { listing(); });
+        function listing() {
             $.ajax({
                 type: "GET",
                 url: "/reply",
@@ -340,7 +341,7 @@
                                                                 Comment</small></div>
                                                             <small>12h ago</small>
                                                         </div>
-                                                <p class="text-justify comment-text mb-0">${Comment}</p>sssss
+                                                <p class="text-justify comment-text mb-0">${Comment}</p>
                                                 <div class="hover-ef d-flex flex-row user-feed">
                                                     <span class="wish"><i class="fa fa-heartbeat mr-2"></i>${like}</span>
                                                     <span class="ml-3"><i class="fa fa-comments-o mr-2"></i>Reply</span>
@@ -407,48 +408,12 @@
     </div>
 
     <div class="container">
-
         <div class="card-1">
             <div class="p-3">
                 <h6>투기장on</h6>
             </div>
-            <div class="mt-2">
-                <div class="d-flex flex-row p-3">
-                    <img src="{{ url_for('static', filename='test.png') }}" width="40" height="40"
-                         class="rounded-circle mr-3">
-                    <div id="w-1000" class="w-100">
-                        <div class="d-flex justify-content-between align-items-center">
-                                    <div class="d-flex flex-row align-items-center"><span
-                                            class="mr-2">김혁진</span> <small class="c-badge">Top
-                                        Comment</small></div>
-                                    <small>12h ago</small>
-                                </div>
-                        <p class="text-justify comment-text mb-0">흰쌀밥 위에 깻잎 싸악 올려서 먹으면 꿀맛!</p>
-                        <div class="hover-ef d-flex flex-row user-feed">
-                            <span class="wish"><i class="fa fa-heartbeat mr-2"></i>100</span>
-                            <span class="ml-3"><i class="fa fa-comments-o mr-2"></i>Reply</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-2">
-                <div class="d-flex flex-row p-3">
-                    <img src="{{ url_for('static', filename='test.png') }}" width="40" height="40"
-                         class="rounded-circle mr-3">
-                    <div id="w-1000" class="w-100">
-                        <div class="d-flex justify-content-between align-items-center">
-                                    <div class="d-flex flex-row align-items-center"><span
-                                            class="mr-2">김혁진</span> <small class="c-badge">Top
-                                        Comment</small></div>
-                                    <small>12h ago</small>
-                                </div>
-                        <p class="text-justify comment-text mb-0">흰쌀밥 위에 깻잎 싸악 올려서 먹으면 꿀맛!</p>
-                        <div class="hover-ef d-flex flex-row user-feed">
-                            <span class="wish"><i class="fa fa-heartbeat mr-2"></i>100</span>
-                            <span class="ml-3"><i class="fa fa-comments-o mr-2"></i>Reply</span>
-                        </div>
-                    </div>
-                </div>
+            <div id="mt-2" class="mt-2">
+
             </div>
         </div>
     </div>
