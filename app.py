@@ -72,11 +72,13 @@ def write_reply():
     Id_receive = request.form['Id_give']
     Password_receive = request.form['Password_give']
     Comment_receive = request.form['Comment_give']
+    like_receive = request.form['like_give']
 
     doc = {
         'Id': Id_receive,
         'Password': Password_receive,
-        'Comment': Comment_receive
+        'Comment': Comment_receive,
+        'like': like_receive
     }
 
     db.reply.insert_one(doc)

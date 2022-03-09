@@ -309,15 +309,18 @@
             $.ajax({
                 type: "POST",
                 url: "/reply",
-                data: {Id_give: Id, Password_give: Password, Comment_give: Comment},
+                data: {Id_give: Id, Password_give: Password, Comment_give: Comment, like_give: like},
                 success: function (response) {
                     alert(response["msg"]);
                     window.location.reload();
                 }
             })
         }
+$(document).ready(function () {
+            listing();
+        });
 
-        function showReply() {
+        function listing() {
             $.ajax({
                 type: "GET",
                 url: "/reply",
@@ -331,8 +334,6 @@
 
 
                         let temp_html = `<div class="d-flex flex-row p-3">
-                                            <img src="{{ url_for('static', filename='test.png') }}" width="40" height="40"
-                                                 class="rounded-circle mr-3">
                                             <div id="w-1000" class="w-100">
                                                 <div class="d-flex justify-content-between align-items-center">
                                                             <div class="d-flex flex-row align-items-center"><span
@@ -340,7 +341,7 @@
                                                                 Comment</small></div>
                                                             <small>12h ago</small>
                                                         </div>
-                                                <p class="text-justify comment-text mb-0">${Comment}</p>sssss
+                                                <p class="text-justify comment-text mb-0">${Comment}</p>
                                                 <div class="hover-ef d-flex flex-row user-feed">
                                                     <span class="wish"><i class="fa fa-heartbeat mr-2"></i>${like}</span>
                                                     <span class="ml-3"><i class="fa fa-comments-o mr-2"></i>Reply</span>
@@ -415,8 +416,6 @@
             </div>
             <div class="mt-2">
                 <div class="d-flex flex-row p-3">
-                    <img src="{{ url_for('static', filename='test.png') }}" width="40" height="40"
-                         class="rounded-circle mr-3">
                     <div id="w-1000" class="w-100">
                         <div class="d-flex justify-content-between align-items-center">
                                     <div class="d-flex flex-row align-items-center"><span
@@ -434,9 +433,7 @@
             </div>
             <div class="mt-2">
                 <div class="d-flex flex-row p-3">
-                    <img src="{{ url_for('static', filename='test.png') }}" width="40" height="40"
-                         class="rounded-circle mr-3">
-                    <div id="w-1000" class="w-100">
+                    <div id="" class="w-100">
                         <div class="d-flex justify-content-between align-items-center">
                                     <div class="d-flex flex-row align-items-center"><span
                                             class="mr-2">김혁진</span> <small class="c-badge">Top
