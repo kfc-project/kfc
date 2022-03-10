@@ -19,126 +19,445 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>KFC | Keyboard Fight Club</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+          rel="stylesheet">
 
-    <link rel="stylesheet" href="../static/style.css">
-    <script src="../app.js"></script>
+    <style>
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
 
+        .navbar {
+            background: #F3D283;
+        }
+
+        .navbar-brand {
+            color: white;
+            margin-left: 20px;
+        }
+
+        .navbar-nav {
+            float: left;
+            display: inline;
+        }
+
+        .nav-item {
+            float: left;
+            margin-left: 50px;
+            color: #1F1815;
+            font-style: bold;
+        }
+
+        .wrap {
+            width: 900px;
+            margin: auto;
+        }
+
+        .gg-img {
+            width: 350px;
+            height: 300px;
+            display: block;
+            margin: auto;
+
+            background-image: url("https://img.etoday.co.kr/pto_db/2022/01/600/20220113163505_1708181_654_654.jpg");
+            background-position: center;
+            background-size: cover;
+        }
+
+        #tr_btn {
+            width: 150px;
+            margin: 50px auto;
+            height: 60px;
+            display: block;
+            text-align: center;
+            background-color: #35b69f;
+            border-color: #35b69f;
+
+        }
+
+        .re-box2 {
+            margin: auto;
+            width: 100%;
+            display: none;
+        }
+
+        #bg-com {
+            width: 869px;
+            margin: auto;
+        }
+
+        #bg-wt {
+            width: 100%;
+            margin: auto;
+        }
+
+        #title {
+            padding: 30px;
+            margin: auto;
+            color: saddlebrown;
+            text-align: center;
+        }
+
+        .sec-title {
+            margin: 50px auto 10px auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        #cont1 {
+            width: 360px;
+            margin-right: 60px;
+            font-size: 30px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        #cont2 {
+            width: 360px;
+            margin-left: 60px;
+            font-size: 30px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .progress_wrap {
+            background-color: green;
+
+        }
+
+        .first {
+            margin-top: 10px;
+            width: 10%;
+            border-radius: 8px;
+            background-color: #F3D283;
+            font-weight: bold;
+        }
+
+        .second1 {
+            width: 100%;
+            height: 35px
+        }
+
+        .third {
+            float: right;
+            margin-top: 10px;
+            width: 10%;
+            border-radius: 8px;
+            background-color: #F3D283;
+            font-weight: bold;
+        }
+
+        #q_btn {
+            background-color: #35b69f;
+            border-color: #35b69f;
+        }
+
+        body {
+            background-color: #eee
+        }
+
+
+        .card-1 {
+            background-color: #fff;
+            border: none;
+
+        }
+
+        .container {
+            width: 100%;
+            margin: auto;
+        }
+
+        .form-control {
+            height: 48px;
+            border-radius: 25px;
+        }
+
+        .form-control:focus {
+            color: #495057;
+            background-color: #fff;
+            border-color: #35b69f;
+            outline: 0;
+            box-shadow: none;
+            text-indent: 10px;
+        }
+
+        .c-badge {
+            background-color: #35b69f;
+            color: white;
+            height: 20px;
+            font-size: 11px;
+            width: 92px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2px;
+        }
+
+        .comment-text {
+            font-size: 18px;
+        }
+
+        .wish {
+            color: #35b69f;
+        }
+
+        .user-feed {
+            font-size: 15px;
+            margin-top: 12px;
+        }
+
+        .page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 50px;
+
+        }
+
+        .w-100 {
+            font-size: 20px;
+        }
+
+        .hover-ef:hover {
+            cursor: pointer;
+        }
+
+    </style>
+
+    <script>
+        $(document).ready(function () {
+            show_bar();
+        });
+
+        function select_btn1(title) {
+            $.ajax({
+                type: 'POST',
+                url: '/api/select1',
+                data: {title_give: title},
+                success: function (response) {
+                    alert(response['msg']);
+                    window.location.reload()
+                }
+            });
+        }
+
+        function select_btn2(title) {
+            $.ajax({
+                type: 'POST',
+                url: '/api/select2',
+                data: {title_give: title},
+                success: function (response) {
+                    alert(response['msg']);
+                    window.location.reload()
+                }
+            });
+        }
+
+        function show_bar() {
+            $.ajax({
+                type: 'GET',
+                url: '/api/showbar',
+                data: {},
+                success: function (response) {
+                    let show_bar = response['show_bars']
+                    let cnt1 = show_bar[0]['sel_cnt1']
+                    let cnt2 = show_bar[0]['sel_cnt2']
+                    let percent1 = Math.round(cnt1 / (cnt1 + cnt2) * 100)
+                    let percent2 = Math.round(cnt2 / (cnt1 + cnt2) * 100)
+
+                    let temp_html = `
+                                       <div class="progress second1">
+                                            <div class="progress-bar bg-danger" role="progressbar" style="width:${percent1}%" aria-valuenow="15"
+                                                 aria-valuemin="0" aria-valuemax="100">${percent1}%
+                                            </div>
+                                            <div class="progress-bar" role="progressbar" style="width:${percent2}%" aria-valuenow="30"
+                                                 aria-valuemin="0" aria-valuemax="100">${percent2}%
+                                            </div>
+                                        </div>`
+
+                    $('#progress_bar').append(temp_html);
+                }
+            });
+        }
+
+        function openClose() {
+            if ($("#reply_box").css("display") == "block") {
+                $("#reply_box").hide();
+                $("#tr_btn").text("토론 참여하기");
+            } else {
+                $("#reply_box").show();
+                $("#tr_btn").text("토론 참여닫기");
+            }
+        }
+
+        function addReply() {
+
+            let Id = $("#replyId").val();
+            let Password = $("#replyPassword").val();
+            let Comment = $("#replyComment").val();
+
+            $.ajax({
+                type: "POST",
+                url: "/reply",
+                data: {Id_give: Id, Password_give: Password, Comment_give: Comment},
+                success: function (response) {
+                    alert(response["msg"]);
+                    window.location.reload();
+                }
+            })
+        }
+
+        $(document).ready(function () { listing(); });
+        function listing() {
+            $.ajax({
+                type: "GET",
+                url: "/reply",
+                data: {},
+                success: function (response) {
+                    let replies = response['all_replies']
+                    for (let i = 0; i < replies.length; i++) {
+                        let Id = replies[i]['Id']
+                        let Comment = replies[i]['Comment']
+                        let like = replies[i]['like']
+
+
+                        let temp_html = `<div class="d-flex flex-row p-3">
+                                            <img src="{{ url_for('static', filename='test.png') }}" width="40" height="40"
+                                                 class="rounded-circle mr-3">
+                                            <div id="w-1000" class="w-100">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                            <div class="d-flex flex-row align-items-center"><span
+                                                                    class="mr-2">${Id}</span> <small class="c-badge">Top
+                                                                Comment</small></div>
+                                                            <small>12h ago</small>
+                                                        </div>
+                                                <p class="text-justify comment-text mb-0">${Comment}</p>
+                                                <div class="hover-ef d-flex flex-row user-feed">
+                                                    <a href="#" onclick="likeComment('${Id}')">
+                                                        <span class="wish"><i class="fa fa-heartbeat mr-2"></i>${like}</span>
+                                                    </a>
+                                                    <span class="ml-3"><i class="fa fa-comments-o mr-2"></i>Reply</span>
+                                                </div>
+                                            </div>
+                                        </div>`
+
+                        $('#mt-2').append(temp_html)
+                    }
+                }
+            })
+        }
+
+
+        function likeComment(Id) {
+            $.ajax({
+                type: 'POST',
+                url: '/api/like',
+                data: {Id_give: Id},
+                success: function (response) {
+                    alert(response['msg']);
+                    window.location.reload()
+                }
+            });
+        }
+
+
+    </script>
 </head>
 
 
 <body>
 
 <nav class="navbar">
-    <a class="navbar-brand" href="/" onclick="rogo"><b>KFC</b></a>
+    <a class="navbar-brand" href="/" onclick="rogo"><img src="{{ url_for('static', filename='kfc_fin.png') }}"
+                                                         width="50%" height="20%"/></a>
     <div class="navbar-nav">
         <a href="/" class="nav-item nav-link active">토론장로비</a>
-        <a href="{{url_for('battle_create')}}" class="nav-item nav-link">토론장생성하기</a>
+        <a href="{{ url_for('battle_create') }}" class="nav-item nav-link">토론장생성하기</a>
     </div>
 </nav>
 
-    <div class="wrap">
-        <h1 id="title">깻잎 논쟁!</h1>
-        <div class="gg-img"></div>
+<div class="wrap">
+    <h1 id="title">깻잎 논쟁!</h1>
+    <div class="gg-img"></div>
+    <div class="sec-title">
         <p id="cont1">내 애인이 내 친구의 깻잎을 떼어줘도 된다</p>
         <p id="cont2">내 애인이 내 친구의 깻잎을 떼어주면 안된다</p>
-
-        <div class="progress_wrap" id="progress_bar">
-        </div>
-        <button class="first" onclick="select_btn1('깻잎 논쟁!')">선택</button>
-        <button class="third" onclick="select_btn2('깻잎 논쟁!')">선택</button>
-        <br>
-        <button onclick="openClose()" id="tr_btn" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal"
-                data-whatever="@fat">토론 참여하기
-        </button>
-
     </div>
 
-
-    <div class="comment-box">
-        <div class="modal-header">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inline1"
-                                   value="option1">
-                            <label id="pt_label" class="form-check-label" for="inline1">깻잎을 떼어 줘도 된다</label>
-                        </div>
-                        <h5 class="modal-title" id="exampleModalLabel">VS</h5>
-                        <div id="form-check" class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inline2"
-                                   value="option2">
-                            <label id="pt_label2" class="form-check-label" for="inline2">깻잎을 떼어 주면 안된다</label>
-                        </div>
-        </div>
-        <form class="comment-form">
-            <input type="text" placeholder="닉네임을 입력해주세요.">
-            <textarea rows="3" placeholder="해당 선택지에 대한 의견을 입력해주세요."></textarea>
-            <button class="cmt-btn" type="submit">토론참여 완료하기</button>
-        </form>
+    <div class="progress_wrap" id="progress_bar">
     </div>
-    <ul id="comment-array">
-        <li>동의 순</li>
-        <li>최신 순</li>
-    </ul>
-    <hr class="cmt-line">
-    <ol id="comment-lists">
-        <li class="comment-list">
-            <div class="profile-image">
-                <img class="profile-icon" src="https://icon-library.com/images/anonymous-icon/anonymous-icon-28.jpg" alt="">
-            </div>
-            <div class="name time">
-                <strong class="nick-name">익명1</strong>
-                <time></time>
-                <div class="comment-content">
-                    절대절대절대불가
-                </div>
-                <div>
-                    <a class="reply" href="#">반박하기</a>
-                </div>
-                <div>
-                    <a class="delete" href="#">삭제</a>
-                </div>
-            </div>
-        </li>
-        <li class="comment-list">
-            <div class="profile-image">
-                <img class="profile-icon" src="https://icon-library.com/images/anonymous-icon/anonymous-icon-28.jpg" alt="">
-            </div>
-            <div class="name time">
-                <strong class="nick-name">익명2</strong>
-                <time></time>
-                <div class="comment-content">
-                    왜 안돼?
-                </div>
-                <div>
-                    <a class="reply" href="#">반박하기</a>
-                </div>
-                <div>
-                    <a class="delete" href="#">삭제</a>
-                </div>
-            </div>
-            <li class="comment-list">
-            <div class="profile-image">
-                <img class="profile-icon" src="https://icon-library.com/images/anonymous-icon/anonymous-icon-28.jpg" alt="">
-            </div>
-            <div class="name time">
-                <strong class="nick-name">익명3</strong>
-                <time></time>
-                <div class="comment-content">
-                    이게 왜 문제
-                </div>
-                <div>
-                    <a class="reply" href="#">반박하기</a>
-                </div>
-                <div>
-                    <a class="delete" href="#">삭제</a>
-                </div>
-            </div>
-        </li>
-        </li>
-    </ol>
-    </body>
+    <button class="first" onclick="select_btn1('깻잎 논쟁!')">선택</button>
+    <button class="third" onclick="select_btn2('깻잎 논쟁!')">선택</button>
+    <br>
+    <button onclick="openClose()" id="tr_btn" type="button" class="btn btn-info">토론 참여하기!
+    </button>
 
-    </html>
+    <div id="reply_box" class="re-box2">
+        <div id="bg-com" class="card-header bg-light">
+            <i class="fa fa-comment fa"></i> 댓글
+        </div>
+        <div id="bg-wt" class="card-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="form-inline mb-2">
+                        <label for="replyId"><i class="fa fa-user-circle-o fa-2x"></i></label>
+                        <input type="text" class="form-control ml-2" placeholder="닉네임" id="replyId">
+                        <label for="replyPassword" class="ml-4"><i class="fa fa-unlock-alt fa-2x"></i></label>
+                        <input type="password" class="form-control ml-2" placeholder="비밀번호" id="replyPassword">
+                    </div>
+                    <textarea class="form-control" placeholder="내용" id="replyComment" rows="3"></textarea>
+                    <button type="button" id="q_btn" class="btn btn-info mt-3" onClick="addReply()">의견 남기기!</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card-1">
+            <div class="p-3">
+                <h6>투기장on</h6>
+            </div>
+            <div id="mt-2" class="mt-2">
+
+            </div>
+        </div>
+    </div>
+
+    <nav class="page" aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+
+</div>
+
+</div>
+
+</body>
+
+</html>
