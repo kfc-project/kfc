@@ -1,6 +1,8 @@
 from pymongo import MongoClient
 from flask import Flask, render_template, jsonify, request
 
+from datetime import datetime
+
 app = Flask(__name__)
 
 client = MongoClient('mongodb+srv://test:sparta@Cluster0.d4msk.mongodb.net/Cluster0?retryWrites=true&w=majority')
@@ -73,12 +75,16 @@ def write_reply():
     Id_receive = request.form['Id_give']
     Password_receive = request.form['Password_give']
     Comment_receive = request.form['Comment_give']
+    Check_receive = request.form['Check_give']
+    time_receive = datetime.now()
 
     doc = {
         'Id': Id_receive,
         'Password': Password_receive,
         'Comment': Comment_receive,
-        'like': 0
+        'like': 0,
+        'Check': Check_receive,
+        'time': time_receive
     }
 
     db.reply.insert_one(doc)
@@ -96,6 +102,20 @@ def read_replies():
 def show_bar():
     bar = list(db.battle.find({'title': '깻잎 논쟁!'}, {'_id': False}))
     return jsonify({'show_bars': bar})
+
+# 좋아요 수 늘리기
+@app.route('/api/like', methods=['POST'])
+def like_comment():
+    Id_receive = request.form['Id_give']
+
+    target_id = db.reply.find_one({'Id': Id_receive})
+    current_like = target_id['like']
+
+    new_like = current_like + 1
+
+    db.reply.update_one({'Id': Id_receive}, {'$set': {'like': new_like}})
+
+    return jsonify({'msg': '좋아요 완료!'})
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
