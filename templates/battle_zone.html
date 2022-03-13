@@ -19,14 +19,37 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>KFC | Keyboard Fight Club</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+          rel="stylesheet">
 
     <style>
         * {
-            font-family: 'Jua', sans-serif;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .navbar {
+            background: #F3D283;
+        }
+
+        .navbar-brand {
+            color: white;
+            margin-left: 20px;
+        }
+
+        .navbar-nav {
+            float: left;
+            display: inline;
+        }
+
+        .nav-item {
+            float: left;
+            margin-left: 50px;
+            color: #1F1815;
         }
 
         .wrap {
@@ -51,6 +74,25 @@
             height: 60px;
             display: block;
             text-align: center;
+            background-color: #35b69f;
+            border-color: #35b69f;
+
+        }
+
+        .re-box2 {
+            margin: auto;
+            width: 100%;
+            display: none;
+        }
+
+        #bg-com {
+            width: 869px;
+            margin: auto;
+        }
+
+        #bg-wt {
+            width: 100%;
+            margin: auto;
         }
 
         #title {
@@ -60,84 +102,29 @@
             text-align: center;
         }
 
-        #pt_label {
-            width: 200px;
-            padding: 10px;
-            font-weight: bold;
-            color: darkred;
-            position: relative;
-            bottom: 8px;
-            left: 25px;
-
+        .sec-title {
+            margin: 50px auto 10px auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
         }
 
-        #pt_label2 {
-            width: 200px;
-            padding: 10px;
-            font-weight: bold;
-            color: darkblue;
-            position: relative;
-            left: 25px;
-            bottom: 8px;
-        }
 
         #cont1 {
-            width: 250px;
-            position: relative;
-            left: 110px;
-            top: 92px;
+            width: 360px;
+            margin-right: 60px;
             font-size: 30px;
             font-weight: bold;
             text-align: center;
         }
 
         #cont2 {
-            width: 270px;
-            position: relative;
-            left: 570px;
-            bottom: 14px;
+            width: 360px;
+            margin-left: 60px;
             font-size: 30px;
             font-weight: bold;
             text-align: center;
-        }
-
-        #inline1 {
-            margin: auto;
-            position: absolute;
-            top: 40px;
-            left: 100px;
-        }
-
-        #inline2 {
-            margin: auto;
-            position: absolute;
-            top: 40px;
-            left: 100px;
-        }
-
-        #exampleModalLabel {
-            margin-right: 20px;
-        }
-
-        .navbar {
-            background: #F3D283;
-        }
-
-        .navbar-brand {
-            color: white;
-            margin-left: 20px;
-        }
-
-        .navbar-nav {
-            float: left;
-            display: inline;
-        }
-
-        .nav-item {
-            float: left;
-            margin-left: 50px;
-            color: white;
-            font-style: bold;
         }
 
         .progress_wrap {
@@ -153,7 +140,7 @@
             font-weight: bold;
         }
 
-        .second {
+        .second1 {
             width: 100%;
             height: 35px
         }
@@ -166,11 +153,134 @@
             background-color: #F3D283;
             font-weight: bold;
         }
+
+        #q_btn {
+            background-color: #35b69f;
+            border-color: #35b69f;
+        }
+
+        body {
+            background-color: #eee
+        }
+
+
+        .card-1 {
+            background-color: #fff;
+            border: none;
+
+        }
+
+
+        .container {
+            width: 100%;
+            margin: auto;
+        }
+
+        .form-control {
+            height: 48px;
+            border-radius: 25px;
+        }
+
+        .form-control:focus {
+            color: #495057;
+            background-color: #fff;
+            border-color: #35b69f;
+            outline: 0;
+            box-shadow: none;
+            text-indent: 10px;
+        }
+
+        .c-badge {
+        {#background-color: #35b69f;#} color: white;
+            height: 20px;
+            font-size: 11px;
+            width: 92px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2px;
+        }
+
+        .comment-text {
+            font-size: 18px;
+        }
+
+        .wish {
+            color: #dc3545;
+        }
+
+        .user-feed {
+            font-size: 15px;
+            margin-top: 12px;
+        }
+
+        .page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 50px;
+
+        }
+
+        .checks {
+            display: flex;
+            align-items: center;
+            margin: 10px auto 10px 10px;
+            font-size: 20px;
+        }
+
+        #check1 {
+            background-color: crimson;
+            color: white;
+            border-radius: 5px;
+            width: 105%;
+            text-align: center;
+        }
+
+        #check2 {
+            background-color: royalblue;
+            color: white;
+            border-radius: 5px;
+            width: 105%;
+            text-align: center;
+        }
+
+        .w-100 {
+            font-size: 20px;
+        }
+
+        .ch-st {
+            background-color: royalblue;
+            color: white;
+            height: 20px;
+            font-size: 11px;
+            width: 28%;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2px;
+        }
+
+        .mr-2 {
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .hover-ef:hover {
+            cursor: pointer;
+        }
+
     </style>
 
     <script>
         $(document).ready(function () {
             show_bar();
+        });
+
+        $(document).ready(function () {
+            showReply();
         });
 
         function select_btn1(title) {
@@ -210,19 +320,144 @@
                     let percent2 = Math.round(cnt2 / (cnt1 + cnt2) * 100)
 
                     let temp_html = `
-                                       <div class="progress second">
-                                            <div class="progress-bar bg-danger" role="progressbar" style="width:${percent1}%" aria-valuenow="15"
-                                                 aria-valuemin="0" aria-valuemax="100">${percent1}%
-                                            </div>
-                                            <div class="progress-bar" role="progressbar" style="width:${percent2}%" aria-valuenow="30"
-                                                 aria-valuemin="0" aria-valuemax="100">${percent2}%
-                                            </div>
-                                        </div>`
+                                           <div class="progress second1">
+                                                <div class="progress-bar bg-danger" role="progressbar" style="width:${percent1}%" aria-valuenow="15"
+                                                     aria-valuemin="0" aria-valuemax="100">${percent1}%
+                                                </div>
+                                                <div class="progress-bar" role="progressbar" style="width:${percent2}%" aria-valuenow="30"
+                                                     aria-valuemin="0" aria-valuemax="100">${percent2}%
+                                                </div>
+                                            </div>`
 
                     $('#progress_bar').append(temp_html);
                 }
             });
         }
+
+        function openClose() {
+            if ($("#reply_box").css("display") == "block") {
+                $("#reply_box").hide();
+                $("#tr_btn").text("토론 참여하기");
+            } else {
+                $("#reply_box").show();
+                $("#tr_btn").text("토론 참여닫기");
+            }
+        }
+
+        function addReply() {
+            let Id = $("#replyId").val();
+            let Password = $("#replyPassword").val();
+            let Comment = $("#replyComment").val();
+            let Check = $("#replyCheck").val();
+
+            $.ajax({
+                type: "POST",
+                url: "/reply",
+                data: {Id_give: Id, Password_give: Password, Comment_give: Comment, Check_give: Check},
+                success: function (response) {
+                    alert(response["msg"]);
+                    window.location.reload();
+                }
+            })
+        }
+
+        function deleteComment(event) {
+            let originPwd = event.parentNode.querySelector(".inputPwd").value
+            let originId = event.parentNode.querySelector(".input_id").value
+            let getpw = prompt('비밀번호 입력해주세요!')
+            if (originPwd === getpw) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/delete',
+                    data: {_id_give: originId},
+                    success: function (response) {
+                        alert(response['msg']);
+                        window.location.reload()
+                    }
+                });
+            } else {
+                alert('비밀번호가 틀렸습니다!');
+            }
+        }
+
+        function showReply() {
+            $.ajax({
+                type: "GET",
+                url: "/reply",
+                data: {},
+                success: function (response) {
+                    let replies = response['all_replies']
+                    for (let i = 0; i < replies.length; i++) {
+                        let Id = replies[i]['Id']
+                        let _id = replies[i]['_id']
+                        let Password = replies[i]['Password']
+                        let Comment = replies[i]['Comment']
+                        let like = replies[i]['like']
+                        let date = displayedAt(replies[i]['time'])
+                        console.log(replies[i]['_id'])
+
+
+                        let temp_html = `<div class="d-flex flex-row p-3">
+                                                <img src="{{ url_for('static', filename='test.png') }}" width="40" height="40"
+                                                     class="rounded-circle mr-3">
+                                                <div id="w-1000" class="w-100">
+                                                <small class="ch-st">내 애인이 내 친구의 깻잎을 떼어주면 안된다</small>
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                                <div class="d-flex flex-row align-items-center">
+                                                                <span class="mr-2">${Id}</span>
+                                                                <small class="sub">${date}</small>
+                                                                <input class="inputPwd" type="hidden" value="${Password}"></input>
+                                                                <input class="input_id" type="hidden" value="${_id}"></input>
+                                                                <small class="c-badge"></small></div>
+                                                                <button onclick="deleteComment(this)" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                  <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                    </div>
+                                                    <p class="text-justify comment-text mb-0">${Comment}</p>
+                                                    <div class="hover-ef d-flex flex-row user-feed">
+                                                        <a href="#" onclick="likeComment('${Id}')">
+                                                            <span class="wish"><i class="fa fa-heart mr-2"></i>${like}</span>
+                                                        </a>
+                                                        <span class="ml-3"><i class="fa fa-comments-o mr-2"></i>Reply</span>
+                                                    </div>
+                                                </div>
+                                            </div>`
+                        $('#mt-2').append(temp_html)
+                    }
+                }
+            })
+        }
+
+        function likeComment(Id) {
+            $.ajax({
+                type: 'POST',
+                url: '/api/like',
+                data: {Id_give: Id},
+                success: function (response) {
+                    alert(response['msg']);
+                    window.location.reload()
+                }
+            });
+        }
+
+        function displayedAt(createdAt) {
+            const milliSeconds = new Date() - new Date(createdAt)
+            const seconds = milliSeconds / 1000
+            if (seconds < 60) return `방금 전`
+            const minutes = seconds / 60
+            if (minutes < 60) return `${Math.floor(minutes)}분 전`
+            const hours = minutes / 60
+            if (hours < 24) return `${Math.floor(hours)}시간 전`
+            const days = hours / 24
+            if (days < 7) return `${Math.floor(days)}일 전`
+            const weeks = days / 7
+            if (weeks < 5) return `${Math.floor(weeks)}주 전`
+            const months = days / 30
+            if (months < 12) return `${Math.floor(months)}개월 전`
+            const years = days / 365
+            return `${Math.floor(years)}년 전`
+        }
+
     </script>
 </head>
 
@@ -230,68 +465,101 @@
 <body>
 
 <nav class="navbar">
-    <a class="navbar-brand" href="/" onclick="rogo"><b>KFC</b></a>
+    <a class="navbar-brand" href="/" onclick="rogo"><img src="{{ url_for('static', filename='kfc_fin.png') }}"
+                                                         width="50%" height="20%"/></a>
     <div class="navbar-nav">
         <a href="/" class="nav-item nav-link active">토론장로비</a>
-        <a href="{{url_for('battle_create')}}" class="nav-item nav-link">토론장생성하기</a>
+        <a href="{{ url_for('battle_create') }}" class="nav-item nav-link">토론장생성하기</a>
     </div>
 </nav>
 
-    <div class="wrap">
-        <h1 id="title">깻잎 논쟁!</h1>
-        <div class="gg-img"></div>
+<div class="wrap">
+    <h1 id="title">깻잎 논쟁!</h1>
+    <div class="gg-img"></div>
+    <div class="sec-title">
         <p id="cont1">내 애인이 내 친구의 깻잎을 떼어줘도 된다</p>
         <p id="cont2">내 애인이 내 친구의 깻잎을 떼어주면 안된다</p>
+    </div>
 
-        <div class="progress_wrap" id="progress_bar">
+    <div class="progress_wrap" id="progress_bar">
+    </div>
+    <button class="first" onclick="select_btn1('깻잎 논쟁!')">선택</button>
+    <button class="third" onclick="select_btn2('깻잎 논쟁!')">선택</button>
+    <br>
+    <button onclick="openClose()" id="tr_btn" type="button" class="btn btn-info">토론 참여하기!
+    </button>
+
+    <div id="reply_box" class="re-box2">
+        <div id="bg-com" class="card-header bg-light">
+            <i class="fa fa-comment fa"></i> 댓글
         </div>
-        <button class="first" onclick="select_btn1('깻잎 논쟁!')">선택</button>
-        <button class="third" onclick="select_btn2('깻잎 논쟁!')">선택</button>
-        <br>
-        <button id="tr_btn" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal"
-                data-whatever="@fat">토론 참여하기
-        </button>
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inline1"
-                                   value="option1">
-                            <label id="pt_label" class="form-check-label" for="inline1">깻잎을 떼어줘도 된다</label>
+        <div id="bg-wt" class="card-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="form-inline mb-2">
+                        <label for="replyId"><i class="fa fa-user-circle-o fa-2x"></i></label>
+                        <input type="text" class="form-control ml-2" placeholder="닉네임" id="replyId">
+                        <label for="replyPassword" class="ml-4"><i class="fa fa-unlock-alt fa-2x"></i></label>
+                        <input type="password" class="form-control ml-2" placeholder="비밀번호" id="replyPassword">
+                    </div>
+                    <div class="checks" id="replyCheck">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
+                                   value="option1" checked>
+                            <label id="check1" class="form-check-label" for="exampleRadios1">
+                                내 애인이 내 친구의 깻잎을 떼어줘도 된다
+                            </label>
                         </div>
-                        <h5 class="modal-title" id="exampleModalLabel">VS</h5>
-                        <div id="form-check" class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inline2"
+                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
                                    value="option2">
-                            <label id="pt_label2" class="form-check-label" for="inline2">깻잎을 떼어주면 안된다</label>
+                            <label id="check2" class="form-check-label" for="exampleRadios2">
+                                내 애인이 내 친구의 깻잎을 떼어주면 안된다
+                            </label>
                         </div>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        </button>
                     </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">닉네임:</label>
-                                <input type="text" class="form-control" id="recipient-name">
-                            </div>
-                            <div class="form-group">
-                                <label for="message-text" class="col-form-label">의견:</label>
-                                <textarea class="form-control" id="message-text"></textarea>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                        <button type="button" class="btn btn-primary">보내기</button>
-                    </div>
-                </div>
+                    <textarea class="form-control" placeholder="내용" id="replyComment" rows="3"></textarea>
+                    <button type="button" id="q_btn" class="btn btn-info mt-3" onClick="addReply()">의견 남기기!</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="card-1">
+            <div class="p-3">
+                <h6 class="tr-bar">투기장on</h6>
+            </div>
+            <div id="mt-2" class="mt-2">
+
             </div>
         </div>
 
+        <nav class="page" aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+
     </div>
 
-    </body>
+</div>
 
-    </html>
+</body>
+
+</html>
