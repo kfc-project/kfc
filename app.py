@@ -94,9 +94,17 @@ def write_reply():
 # 댓글 DB 가져오기
 @app.route('/reply', methods=['GET'])
 def read_replies():
-    replies = list(db.reply.find({}, {'_id': False}))
+    replies = objectIdDecoder(list(db.reply.find({})))
+    print(replies)
     return jsonify({'all_replies': replies})
 
+# object 값을 str로 바꾸기
+def objectIdDecoder(list):
+  results=[]
+  for document in list:
+    document['_id'] = str(document['_id'])
+    results.append(document)
+  return results
 
 @app.route('/api/showbar', methods=['GET'])
 def show_bar():
@@ -116,6 +124,14 @@ def like_comment():
     db.reply.update_one({'Id': Id_receive}, {'$set': {'like': new_like}})
 
     return jsonify({'msg': '좋아요 완료!'})
+
+# 댓글 삭제하기
+@app.route('/api/delete', methods=['POST'])
+def delete_reply():
+    _id_receive = request.form['_id_give']
+    db.reply.delete_one({'name': _id_receive})
+    return jsonify({'msg': '삭제 완료!'})
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
