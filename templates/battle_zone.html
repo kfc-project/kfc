@@ -444,13 +444,23 @@
 
             function deleteComment(event) {
                 let originPwd = event.parentNode.querySelector(".inputPwd").value
-                console.log(event.parentNode.querySelector(".input_id"))
-                let getpw = prompt('비밀번호 입력해주세요')
+                let originId = event.parentNode.querySelector(".input_id").value
+                let getpw = prompt('비밀번호 입력해주세요!')
                 if (originPwd === getpw) {
-
+                    $.ajax({
+                        type: 'POST',
+                        url: '/api/delete',
+                        data: {_id_give: originId},
+                        success: function (response) {
+                            alert(response['msg']);
+                            window.location.reload()
+                        }
+                    });
+                }
+                else {
+                    alert('비밀번호가 틀렸습니다!');
                 }
             }
-
 
         </script>
     </head>

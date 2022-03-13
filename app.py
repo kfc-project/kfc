@@ -1,3 +1,4 @@
+from bson import ObjectId
 from pymongo import MongoClient
 from flask import Flask, render_template, jsonify, request
 
@@ -129,7 +130,7 @@ def like_comment():
 @app.route('/api/delete', methods=['POST'])
 def delete_reply():
     _id_receive = request.form['_id_give']
-    db.reply.delete_one({'name': _id_receive})
+    db.reply.delete_one({'_id': ObjectId(_id_receive)})
     return jsonify({'msg': '삭제 완료!'})
 
 
