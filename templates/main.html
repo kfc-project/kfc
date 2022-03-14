@@ -133,17 +133,17 @@
         }
 
         function view_cnt(event) {
-            let id = event.parentNode.querySelector(".input_bid").value
-            console.log(id)
+            let id = event.parentNode.parentNode.parentNode.querySelector(".input_bid").value;
             $.ajax({
                 type: 'POST',
                 url: '/cnt_view',
                 data: {id_give: id},
                 success: function (response) {
                     alert(response['msg']);
-                    window.location.href='battle_zone';
+                    window.location.href = 'battle_zone';
                 }
             });
+
         }
 
         function listing() {
@@ -155,15 +155,16 @@
                     let card = response['cards']
                     for (let i = 0; i < card.length; i++) {
                         let id = card[i]['_id']
+                        console.log(id)
                         let title = card[i]['title']
                         let cnt = card[i]['total_cnt']
-                        let img = card[i]['img_url']
+                        let img = card[i]['img_src']
 
 
                         let temp_html = `<div class="card mb-3" style="max-width: 18rem;">
                                         <div class="card-body">
                                             <h4 class="card-title"><b>${title}</b></h4>
-                                            <img class="card-img" src="${img}" alt="">
+                                            <img class="card-img" src="../static/${img}" alt="">
                                             <input class="input_bid" type="hidden" value="${id}"></input>
                                             <div class="card-bottom container">
                                                 <p class="card-text, seenum"><span>조회수:<span id="result">${cnt}</span>회</span>

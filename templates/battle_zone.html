@@ -365,6 +365,10 @@
             let originPwd = event.parentNode.querySelector(".inputPwd").value
             let originId = event.parentNode.querySelector(".input_id").value
             let getpw = prompt('비밀번호 입력해주세요!')
+
+            if (getpw === null) {
+                return
+            }
             if (originPwd === getpw) {
                 $.ajax({
                     type: 'POST',
