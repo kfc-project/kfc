@@ -1,10 +1,15 @@
+import os
+
 from bson import ObjectId
 from pymongo import MongoClient
 from flask import Flask, render_template, jsonify, request
-
 from datetime import datetime
 
+UPLOAD_FOLDER = './static'
+ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jepg', 'gif'])
+
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 client = MongoClient('mongodb+srv://test:sparta@Cluster0.d4msk.mongodb.net/Cluster0?retryWrites=true&w=majority')
 db = client.dbsparta
@@ -25,41 +30,6 @@ def battle_create():
 def battle_zone():
     return render_template('battle_zone.html')
 
-
-# @app.route('/card', methods=["POST"])
-# def card_post():
-#     title_receive = request.form['title_give']
-#     img_receive = request.form['img_give']
-#     link_receive = request.form['link_give']
-#     num_receive = request.form['num_give']
-#
-#     doc = {
-#         'title': title_receive,
-#         'img': img_receive,
-#         'link': link_receive,
-#         'num': num_receive
-#     }
-#
-#     db.cards.insert_one(doc)
-#
-#     return jsonify({'msg': '저장완료'})
-#
-#
-# # @app.route('/card', methods=["GET"])
-# # def card_get():
-# #     return jsonify({'msg': 'GET 연결 완료!'})
-# #
-# #
-# # @app.route('/battle_create')
-# # def battle_create():
-# #     sample_receive = request.form['sample_give']
-# #     print(sample_receive)
-# #     return jsonify({'msg': 'POST 연결 완료!'})
-# #
-# #
-# # @app.route('/battle_zone')
-# # def battle_zone():
-# #     return render_template('battle_zone.html')
 
 # 'battle_zone.html' 관련 코드
 # 왼쪽 '선택' 버튼을 눌렀을 시 작동
@@ -129,6 +99,7 @@ def read_replies():
     print(replies)
     return jsonify({'all_replies': replies})
 
+
 # 댓글 삭제하기
 @app.route('/api/delete', methods=['POST'])
 def delete_reply():
@@ -176,13 +147,36 @@ def sub_create():
     title_receive = request.form['title_give']
     sub1_receive = request.form['sub1_give']
     sub2_receive = request.form['sub2_give']
-    img_receive = request.form['img_give']
+
+    file_len = len(request.files)
+    # file_len 이 0이면 JS에서 파일을 안보낸준 것!
+    # 파일을 안보내줬으면 default 파일이름을 넘겨준다.
+    if file_len == 0:
+        full_file_name = 'default-challenge-img.jfif'  # default 파일이름 설정
+    else:
+        # 파일을 제대로 전달해줬으면 파일을 꺼내서 저장하고 파일이름을 넘겨준다.
+        img_receive = request.files['img_give']
+        print(img_receive)
+
+        extension = img_receive.filename.split('.')[-1]
+
+        today = datetime.now()
+        mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
+
+        filename = f'challenge-file-{mytime}'
+        # save_to = f'static/assets/img/challenge/{filename}.{extension}'
+        # image_receive.save(save_to)
+        full_file_name = f'{filename}.{extension}'
+
+        # 토론장 이미지 업로드 하기
+        path = os.path.join(app.config['UPLOAD_FOLDER'], full_file_name)
+        img_receive.save(path)
 
     doc = {
         'title': title_receive,
         'subject1': sub1_receive,
         'subject2': sub2_receive,
-        'img_src': img_receive,
+        'img_src': full_file_name,
         'sel_cnt1': 0,
         'sel_cnt2': 0,
         'total_cnt': 0
@@ -192,26 +186,19 @@ def sub_create():
     return jsonify({'msg': '생성되었습니다.'})
 
 
-# 토론장 이미지 업로드 하기
-@app.route('/uploader', methods=['GET', 'POST'])
-def upload_file():
-    if request.files == 'POST':
-        f = request.files['file']
-        f.save('./static/' + secure_filename(f.filename))
-        return jsonify({'msg': '이미지 업로드 완료.'})
-
-
 # 조회수 카운트하기
 @app.route('/cnt_view', methods=['POST'])
 def view_cnt():
     id_receive = request.form['id_give']
     target_id = db.battle.find_one({'_id': ObjectId(id_receive)})
+    print(target_id)
 
     current_cnt = target_id['total_cnt']
     new_cnt = current_cnt + 1
 
-    db.battle.update_one({'_id': target_id}, {'$set': {'total_cnt': new_cnt}})
+    db.battle.update_one({'_id': ObjectId(id_receive)}, {'$set': {'total_cnt': new_cnt}})
     return jsonify({'msg': '토론장으로 이동해볼까요?'})
+
 
 # object 값을 str로 바꾸기
 def object_string(list):
