@@ -88,7 +88,7 @@ def write_reply():
 
 # 배틀 타이틀 가져오기
 @app.route('/reply', methods=['GET'])
-def read_replies():
+def read_battles():
     battles = list(db.battle.find({}, {'_id':False}))
     return jsonify({'all_battles': battles})
 

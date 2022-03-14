@@ -302,84 +302,8 @@
                                                 <p id="cont1">${subject1}</p>
                                                 <p id="cont2">${subject2}</p>
                                              </div>
-
-                                            <div class="progress_wrap" id="progress_bar">
-                                                    </div>
-                                                    <button class="first" onclick="select_btn1('깻잎 논쟁!')">선택</button>
-                                                    <button class="third" onclick="select_btn2('깻잎 논쟁!')">선택</button>
-                                                    <br>
-                                                    <button onclick="openClose()" id="tr_btn" type="button" class="btn btn-info">토론 참여하기!
-                                                    </button>
-
-                                                    <div id="reply_box" class="re-box2">
-                                                        <div id="bg-com" class="card-header bg-light">
-                                                            <i class="fa fa-comment fa"></i> 댓글
-                                                        </div>
-                                                        <div id="bg-wt" class="card-body">
-                                                            <ul class="list-group list-group-flush">
-                                                                <li class="list-group-item">
-                                                                    <div class="form-inline mb-2">
-                                                                        <label for="replyId"><i class="fa fa-user-circle-o fa-2x"></i></label>
-                                                                        <input type="text" class="form-control ml-2" placeholder="닉네임" id="replyId">
-                                                                        <label for="replyPassword" class="ml-4"><i class="fa fa-unlock-alt fa-2x"></i></label>
-                                                                        <input type="password" class="form-control ml-2" placeholder="비밀번호" id="replyPassword">
-                                                                    </div>
-                                                                    <div class="checks" id="replyCheck">
-                                                                        <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
-                                                                                   value="option1" checked>
-                                                                            <label id="check1" class="form-check-label" for="exampleRadios1">
-                                                                                내 애인이 내 친구의 깻잎을 떼어줘도 된다
-                                                                            </label>
-                                                                        </div>
-                                                                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                                                                        <div class="form-check">
-                                                                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
-                                                                                   value="option2">
-                                                                            <label id="check2" class="form-check-label" for="exampleRadios2">
-                                                                                내 애인이 내 친구의 깻잎을 떼어주면 안된다
-                                                                            </label>
-                                                                        </div>
-                                                                    </div>
-                                                                    <textarea class="form-control" placeholder="내용" id="replyComment" rows="3"></textarea>
-                                                                    <button type="button" id="q_btn" class="btn btn-info mt-3" onClick="addReply()">의견 남기기!</button>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="container">
-
-                                                        <div class="card-1">
-                                                            <div class="p-3">
-                                                                <h6 class="tr-bar">투기장on</h6>
-                                                            </div>
-                                                            <div id="mt-2" class="mt-2">
-
-                                                            </div>
-                                                        </div>
-
-                                                        <nav class="page" aria-label="Page navigation example">
-                                                            <ul class="pagination">
-                                                                <li class="page-item">
-                                                                    <a class="page-link" href="#" aria-label="Previous">
-                                                                        <span aria-hidden="true">&laquo;</span>
-                                                                        <span class="sr-only">Previous</span>
-                                                                    </a>
-                                                                </li>
-                                                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                                                <li class="page-item">
-                                                                    <a class="page-link" href="#" aria-label="Next">
-                                                                        <span aria-hidden="true">&raquo;</span>
-                                                                        <span class="sr-only">Next</span>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </nav>
-                                                    </div>
-
-                                `
-                            $('#wrap').append(temp_html)
+                                            `
+                            $('#wrap1').append(temp_html)
                         }
                     }
                 })
@@ -583,8 +507,82 @@
         </div>
     </nav>
 
-    <div class="wrap" id="wrap">
+    <div class="wrap">
 
+        <div id="wrap1"></div>
+        <div class="progress_wrap" id="progress_bar"></div>
+        <button class="first" onclick="select_btn1('깻잎 논쟁!')">선택</button>
+        <button class="third" onclick="select_btn2('깻잎 논쟁!')">선택</button>
+        <br>
+        <button onclick="openClose()" id="tr_btn" type="button" class="btn btn-info">토론 참여하기!
+        </button>
+
+        <div id="reply_box" class="re-box2">
+            <div id="bg-com" class="card-header bg-light">
+                <i class="fa fa-comment fa"></i> 댓글
+            </div>
+            <div id="bg-wt" class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="form-inline mb-2">
+                            <label for="replyId"><i class="fa fa-user-circle-o fa-2x"></i></label>
+                            <input type="text" class="form-control ml-2" placeholder="닉네임" id="replyId">
+                            <label for="replyPassword" class="ml-4"><i class="fa fa-unlock-alt fa-2x"></i></label>
+                            <input type="password" class="form-control ml-2" placeholder="비밀번호" id="replyPassword">
+                        </div>
+                        <div class="checks" id="replyCheck">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
+                                       value="option1" checked>
+                                <label id="check1" class="form-check-label" for="exampleRadios1">
+                                    내 애인이 내 친구의 깻잎을 떼어줘도 된다
+                                </label>
+                            </div>
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
+                                       value="option2">
+                                <label id="check2" class="form-check-label" for="exampleRadios2">
+                                    내 애인이 내 친구의 깻잎을 떼어주면 안된다
+                                </label>
+                            </div>
+                        </div>
+                        <textarea class="form-control" placeholder="내용" id="replyComment" rows="3"></textarea>
+                        <button type="button" id="q_btn" class="btn btn-info mt-3" onClick="addReply()">의견 남기기!</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="container">
+
+            <div class="card-1">
+                <div class="p-3">
+                    <h6 class="tr-bar">투기장on</h6>
+                </div>
+                <div id="mt-2" class="mt-2">
+
+                </div>
+            </div>
+
+            <nav class="page" aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
 
     </div>
 
