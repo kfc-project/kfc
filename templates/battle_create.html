@@ -26,6 +26,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
           rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+          rel="stylesheet">
 
     <title>KFC | Keyboard Fight Club</title>
 
@@ -85,12 +87,15 @@
 
         /*생성하기버튼*/
         .btn {
-            width: 500px;
-            margin: auto;
+            width: 150px;
             margin-top: 30px;
+            margin-right : 10px;
             background: #F3D283;
             border: 0px;
             font-family: 'Jua', sans-serif;
+        }
+        .btn_align{
+            text-align: center;
         }
 
         .btn:hover {
@@ -117,8 +122,41 @@
             color: #1F1815;
             font-style: bold;
         }
+        .attach_box{
+            border-style: solid;
+            border-color: lightgray;
+            width: 700px;
+            padding-top: 10px;
+            padding-left: 3px;
+            padding-bottom : 10px;
+        }
+        .input-file-button{
+            padding: 6px 25px;
+            background-color: #F3D283;
+            border-radius: 4px;
+            border-color: black;
+            cursor: pointer;
+        }
 
     </style>
+    <script>
+        function sub_create(){
+            let main_title = $('#title').val();
+            let subject1 = $('#sub1').val();
+            let subject2 = $('#sub2').val();
+            let img = $('#attach_img').val();
+
+             $.ajax({
+                type: 'POST',
+                url: '/api/sub_create',
+                data: {title_give: main_title, sub1_give: subject1, sub2_give: subject2, img_give: img},
+                success: function (response) {
+                    alert(response['msg']);
+                    window.location.reload()
+                }
+            });
+        }
+    </script>
 </head>
 
 
@@ -139,10 +177,10 @@
 <!--/*메인의견*/-->
 <div class="main input-group mb-3">
     <div class="input-group-prepend">
-        <span class="input-group-text" id="inputGroup-sizing-default"
+        <span class="input-group-text"
               style="background: #F3D2834D;">메인 토론 주제</span>
     </div>
-    <input type="text" class="form-control" aria-label="Default"
+    <input id="title" type="text" class="form-control" aria-label="Default"
            aria-describedby="inputGroup-sizing-default"
            placeholder="메인토론 주제를 입력해주세요.">
 </div>
@@ -151,17 +189,17 @@
 <div class="opinion">
     <div class="op1 input-group mb-3">
         <div class="input-group-prepend op1-1">
-            <span class="input-group-text" id="inputGroup-sizing-default"
+            <span class="input-group-text"
                   style="background: #F3D2834D;">의견1</span>
         </div>
-        <input type="text" class="form-control op1-1-1" aria-label="Default"
+        <input id="sub1" type="text" class="form-control op1-1-1" aria-label="Default"
                aria-describedby="inputGroup-sizing-default"
                placeholder="메인 의견을 작성해주세요.">
         <div class="input-group-prepend op1-2">
-            <span class="input-group-text" id="inputGroup-sizing-default"
+            <span class="input-group-text"
                   style="background: #F3D2834D;">의견2</span>
         </div>
-        <input type="text" class="form-control" aria-label="Default"
+        <input id="sub2" type="text" class="form-control" aria-label="Default"
                aria-describedby="inputGroup-sizing-default"
                placeholder="메인 의견을 작성해주세요.">
     </div>
@@ -175,9 +213,15 @@
 
 <!--/*이미지넣기*/-->
 <div class="plusimg input-group mb-3">
-    <div class="input-group-prepend">
-        <span class="input-group-text" id="inputGroup-sizing-default"
-              style="background: #F3D2834D;">이미지 첨부</span>
+    <div class="attach_box">
+        <form id="image_form" action="http://localhost:5000/uploader"
+              method="POST"
+              enctype="multipart/form-data">
+            <input type="file" name="file" />
+            <input type="submit" value="업로드"/>
+            <br>
+            <span>*파일이 첨부 되지 않을 경우, 랜덤 사진이 노출됩니다.*</span>
+        </form>
     </div>
     <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
            placeholder="파일이 첨부 되지 않을 경우, 랜덤 사진이 노출됩니다.">
@@ -185,6 +229,12 @@
 
 <!--/*생성하기 버튼*/-->
 <a href="/" button type="button" class="btn btn-secondary btn-lg btn-block">생성하기</button></a>
+
+<!--닫기, 생성하기 버튼-->
+<div class="btn_align">
+    <a href="/" button type="button" class="btn btn-secondary">닫기</button></a>
+    <a href="/" button type="button" class="btn btn-secondary" onclick="sub_create()">생성하기</button></a>
+</div>
 
 </body>
 
