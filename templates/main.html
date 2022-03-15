@@ -31,33 +31,21 @@
             font-family: 'Noto Sans KR', sans-serif;
         }
 
-        .body {
-
-
-        }
-
         .wrap {
             width: 100%;
             margin: auto;
-
-        }
-
-        .card-coulums {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: flex-start;
-            justify-content: center;
         }
 
         .card {
-            width: 400px;
-            height: 300px;
+            width: 300px;
+            height: 350px;
             float: left;
             margin-left: 35px;
             margin-top: 60px;
             text-align: center;
             background-color: #F3D2834D;
-            border-radius: 20px;
+            border-radius: 50px;
+            border: 0px;
             position: static;
         }
 
@@ -71,11 +59,11 @@
 
         .btndgo {
             font-size: 12px;
-            background-color: #f1d083;
-            border-radius: 5px;
-            border: 1px solid #1F1815;
+            background-color: #F3D283;
+            border-radius: 10px;
+            border: 1px solid white;
             margin-left: 20px;
-            padding: 3px;
+            padding: 2px;
             text-align: center;
             vertical-align: center;
         }
@@ -104,7 +92,8 @@
             object-fit: cover;
             background-position: center;
             background-size: cover;
-            border-radius: 3px;
+            border-radius: 5px;
+            border: 2px solid #F3D283;
             margin-bottom: 5px;
             margin-top: 5px;
         }
@@ -130,7 +119,12 @@
         .btndgo:active {
             color: gray;
         }
-
+        .title_text{
+            font-size : 13px;
+        }
+        .main_image{
+            position : static;
+        }
 
     </style>
     <script>
@@ -157,6 +151,31 @@
 
         }
 
+        function delete_card(event) {
+            let id = event.parentNode.querySelector(".input_bid").value;
+            let pw = event.parentNode.querySelector(".input_bpw").value;
+
+            let getpw = prompt('비밀번호를 입력하세요.')
+
+            if (getpw === null) {
+                return
+            }
+            if (pw === getpw) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/sub_delete',
+                    data: {id_give: id},
+                    success: function (response) {
+                        alert(response['msg']);
+                        window.location.reload()
+                    }
+                });
+            }
+            else {
+                alert('비밀번호가 다릅니다.');
+            }
+        }
+
         function listing() {
             $.ajax({
                 type: 'GET',
@@ -166,25 +185,31 @@
                     let card = response['cards']
                     for (let i = 0; i < card.length; i++) {
                         let id = card[i]['_id']
-                        console.log(id)
                         let title = card[i]['title']
                         let cnt = card[i]['total_cnt']
+                        let name = card[i]['name']
+                        let pw = card[i]['password']
                         let img = card[i]['img_src']
 
 
-                        let temp_html = `<div class="card" >
-                                        <div class="card-body">
-                                            <h4 class="card-title"><b>${title}</b></h4>
-                                            <img class="card-img" src="../static/${img}" alt="">
-                                            <input class="input_bid" type="hidden" value="${id}"/>
-                                            <div class="card-bottom container">
-                                                <p class="card-text, seenum"><span>조회수:<span id="result">${cnt}</span>회</span>
-                                                    <a type="button" class="btndgo" style="cursor:pointer"
-                                                       onclick="view_cnt(this)">토론하러가기</button></a>
-                                                </p>
+                        let temp_html = `<div class="card mb-3" style="max-width: 18rem;">
+                                            <div class="card-body">
+                                                <button onclick="delete_card(this)" type="button" class="close" data-dismiss="modal">
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span aria-hidden="true">x</span>
+                                                </button><br>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="title_text"><span>${name} 님이 만든 주제</span></div>
+                                                <input class="input_bpw" type="hidden" value="${pw}"></input>
+                                                <h4 class="card-title"><b>${title}</b></h4>
+                                                <img class="card-img" src="../static/${img}" alt="">
+                                                <input class="input_bid" type="hidden" value="${id}"></input>
+                                                <div class="card-bottom container">
+                                                    <p class="card-text, seenum"><span>조회수:<span id="result">${cnt}</span>회</span>
+                                                        <a type="button" class="btndgo" style="cursor:pointer"
+                                                           onclick="view_cnt(this)">토론하러가기</button></a>
+                                                    </p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>`
+                                        </div>`
                         $('#cards-box').append(temp_html)
                     }
                 }
@@ -196,23 +221,25 @@
 </head>
 
 <body>
-<div class="body">
-    <!--여기서부터 네비게이션바-->
-    <nav class="navbar">
-        <a class="navbar-brand" href="/" onclick="rogo">
-            <img src="{{ url_for('static', filename='kfc_fin.png') }}" width="50%"
-                 height="20%"/></a>
-        <div class="navbar-nav">
-            <a href="/" class="nav-name nav-item nav-link active">토론장로비</a>
-            <a href="{{ url_for('battle_create') }}" class="nav-name nav-item nav-link">토론장생성하기</a>
-        </div>
-    </nav>
+<!--여기서부터 네비게이션바-->
+<nav class="navbar">
+    <a class="navbar-brand" href="/" onclick="rogo">
+        <img src="{{ url_for('static', filename='kfc_fin.png') }}" width="50%"
+             height="20%"/></a>
+    <a class="main_image" href="/" onclick="rogo">
+        <img src="{{ url_for('static', filename='main_image.png') }}" width="100%"
+             height="50%"/></a>
+    <div class="navbar-nav">
+        <a href="/" class="nav-name nav-item nav-link active">토론장로비</a>
+        <a href="{{ url_for('battle_create') }}" class="nav-name nav-item nav-link">토론장생성하기</a>
+    </div>
+</nav>
 
-    <!--여기서부터 카드-->
-    <div class="wrap">
-        <div class="card-coulums col-xs-6 col-lg-12" id="cards-box">
-        </div>
+<!--여기서부터 카드-->
+<div class="wrap">
+    <div class="card-coulums" id="cards-box">
     </div>
 </div>
+
 </body>
 </html>

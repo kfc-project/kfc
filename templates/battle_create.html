@@ -55,6 +55,7 @@
             width: 650px;
             margin: auto;
             margin-top: 30px;
+            margin-bottom: 10px;
         }
 
         /*의견1*/
@@ -83,12 +84,13 @@
         .btn {
             width: 150px;
             margin-top: 30px;
-            margin-right : 10px;
+            margin-right: 10px;
             background: #F3D283;
             border: 0px;
             font-family: 'Jua', sans-serif;
         }
-        .btn_align{
+
+        .btn_align {
             text-align: center;
         }
 
@@ -114,21 +116,32 @@
             float: left;
             margin-left: 50px;
             color: #1F1815;
+            font-style: bold;
         }
-        .attach_box{
+
+        .attach_box {
             border-style: solid;
             border-color: lightgray;
             width: 700px;
             padding-top: 10px;
             padding-left: 3px;
-            padding-bottom : 10px;
+            padding-bottom: 10px;
         }
-        .input-file-button{
+
+        .input-file-button {
             padding: 6px 25px;
             background-color: #F3D283;
             border-radius: 4px;
             border-color: black;
             cursor: pointer;
+        }
+
+        .user_text {
+            color: red;
+        }
+
+        .main_image {
+            position: static;
         }
 
     </style>
@@ -137,12 +150,16 @@
             let main_title = $('#title').val();
             let subject1 = $('#sub1').val();
             let subject2 = $('#sub2').val();
+            let name = $('#name').val();
+            let pw = $('#password').val();
             let img = $('#file_upload')[0].files[0];
 
             let form_data = new FormData()
             form_data.append("title_give", main_title)
             form_data.append("sub1_give", subject1)
             form_data.append("sub2_give", subject2)
+            form_data.append("name_give", name)
+            form_data.append("pw_give", pw)
             form_data.append("img_give", img)
 
             $.ajax({
@@ -154,7 +171,7 @@
                 processData: false,
                 success: function (response) {
                     alert(response['msg']);
-                    window.location.href="/";
+                    window.location.href = "/";
                 }
             });
         }
@@ -166,15 +183,40 @@
 
 <!--여기서부터 네비게이션바-->
 <nav class="navbar">
-    <a class="navbar-brand" href="/" onclick="rogo"><img src="{{url_for('static', filename='kfc_fin.png')}}" width="50%" height="20%"/></a>
+    <a class="navbar-brand" href="/" onclick="rogo">
+        <img src="{{ url_for('static', filename='kfc_fin.png') }}" width="50%" height="20%"/></a>
+    <a class="main_image" href="/" onclick="rogo">
+        <img src="{{ url_for('static', filename='main_image.png') }}" width="100%" height="50%"/></a>
     <div class="navbar-nav">
         <a href="/" class="nav-item nav-link active">토론장로비</a>
-        <a href="{{url_for('battle_create')}}" class="nav-item nav-link">토론장생성하기</a>
+        <a href="{{ url_for('battle_create') }}" class="nav-item nav-link">토론장생성하기</a>
     </div>
 </nav>
 
 <div class="title"><h1><b>토론장 만들기</b></h1></div>
 <p class="subti">*아름다운 토론문화를 위해 위험한 토론은 관리자에 의해 삭제될 수 있습니다.*</p>
+
+<!--/*닉네임, 패스워드 입력*/-->
+<div class="opinion">
+    <div class="op1 input-group mb-3">
+        <div class="input-group-prepend op1-1">
+            <span class="input-group-text"
+                  style="background: #F3D2834D;">닉네임</span>
+        </div>
+        <input id="name" type="text" class="form-control op1-1-1" aria-label="Default"
+               aria-describedby="inputGroup-sizing-default"
+               placeholder="닉네임을 입력하세요.">
+        <div class="input-group-prepend op1-2">
+            <span class="input-group-text"
+                  style="background: #F3D2834D;">패스워드</span>
+        </div>
+        <input id="password" type="text" class="form-control" aria-label="Default"
+               aria-describedby="inputGroup-sizing-default"
+               placeholder="패스워드를 입력하세요.">
+    </div>
+    <center><small class="user_text">토론주제를 삭제하기 위해 사용되오니 패스워드를 기억하세요.</small></center>
+</div>
+
 
 <!--/*메인의견*/-->
 <div class="main input-group mb-3">
@@ -196,23 +238,23 @@
         </div>
         <input id="sub1" type="text" class="form-control op1-1-1" aria-label="Default"
                aria-describedby="inputGroup-sizing-default"
-               placeholder="메인 의견을 작성해주세요.">
+               placeholder="첫번째 의견을 작성해주세요.">
         <div class="input-group-prepend op1-2">
             <span class="input-group-text"
                   style="background: #F3D2834D;">의견2</span>
         </div>
         <input id="sub2" type="text" class="form-control" aria-label="Default"
                aria-describedby="inputGroup-sizing-default"
-               placeholder="메인 의견을 작성해주세요.">
+               placeholder="두번째 의견을 작성해주세요.">
     </div>
 </div>
 
 <!--/*이미지넣기*/-->
 <div class="plusimg input-group mb-3">
     <div class="attach_box">
-            <input type="file" name="file" id="file_upload"/>
-            <br>
-            <span>*파일이 첨부 되지 않을 경우, 랜덤 사진이 노출됩니다.*</span>
+        <input type="file" name="file" id="file_upload"/>
+        <br>
+        <span>*파일이 첨부 되지 않을 경우, 랜덤 사진이 노출됩니다.*</span>
     </div>
 </div>
 
