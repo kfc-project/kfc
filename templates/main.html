@@ -32,20 +32,20 @@
         }
 
         .wrap {
-            margin: 50px auto 50px auto;
-            width: 95%;
-
+            width: 100%;
+            margin: auto;
         }
 
         .card {
-            width: 450px;
-            height: 400px;
+            width: 300px;
+            height: 350px;
             float: left;
             margin-left: 35px;
             margin-top: 60px;
             text-align: center;
             background-color: #F3D2834D;
-            border-radius: 20px;
+            border-radius: 50px;
+            border: 0px;
             position: static;
         }
 
@@ -60,10 +60,10 @@
         .btndgo {
             font-size: 12px;
             background-color: #F3D283;
-            border-radius: 5px;
-            border: 1px solid #343302;
+            border-radius: 10px;
+            border: 1px solid white;
             margin-left: 20px;
-            padding: 5px;
+            padding: 2px;
             text-align: center;
             vertical-align: center;
         }
@@ -87,12 +87,13 @@
         }
 
         .card-img {
-            width: 300px;
-            height: 200px;
+            width: 230px;
+            height: 150px;
             object-fit: cover;
             background-position: center;
             background-size: cover;
             border-radius: 5px;
+            border: 2px solid #F3D283;
             margin-bottom: 5px;
             margin-top: 5px;
         }
@@ -118,13 +119,11 @@
         .btndgo:active {
             color: gray;
         }
-
-        .title_text {
-            font-size: 13px;
+        .title_text{
+            font-size : 13px;
         }
-
-        .main_image {
-            position: static;
+        .main_image{
+            position : static;
         }
 
     </style>
@@ -171,7 +170,8 @@
                         window.location.reload()
                     }
                 });
-            } else {
+            }
+            else {
                 alert('비밀번호가 다릅니다.');
             }
         }
@@ -192,16 +192,16 @@
                         let img = card[i]['img_src']
 
 
-                        let temp_html = `<div class="card mb-3">
+                        let temp_html = `<div class="card mb-3" style="max-width: 18rem;">
                                             <div class="card-body">
                                                 <button onclick="delete_card(this)" type="button" class="close" data-dismiss="modal">
-                                                <span aria-hidden="true">x</span>
-                                                </button>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span aria-hidden="true">x</span>
+                                                </button><br>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="title_text"><span>${name} 님이 만든 주제</span></div>
-                                                <input class="input_bpw" type="hidden" value="${pw}"/>
+                                                <input class="input_bpw" type="hidden" value="${pw}"></input>
                                                 <h4 class="card-title"><b>${title}</b></h4>
                                                 <img class="card-img" src="../static/${img}" alt="">
-                                                <input class="input_bid" type="hidden" value="${id}"/>
+                                                <input class="input_bid" type="hidden" value="${id}"></input>
                                                 <div class="card-bottom container">
                                                     <p class="card-text, seenum"><span>조회수:<span id="result">${cnt}</span>회</span>
                                                         <a type="button" class="btndgo" style="cursor:pointer"
@@ -237,7 +237,7 @@
 
 <!--여기서부터 카드-->
 <div class="wrap">
-    <div id="cards-box">
+    <div class="card-coulums" id="cards-box">
     </div>
 </div>
 

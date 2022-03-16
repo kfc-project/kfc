@@ -14,7 +14,6 @@ client = MongoClient('mongodb+srv://test:sparta@Cluster0.d4msk.mongodb.net/Clust
 db = client.dbsparta
 
 
-
 # HTML 화면 보여주기
 @app.route('/')
 def home():
