@@ -30,6 +30,7 @@ def card_post():
 
     db.cards.insert_one(doc)
 
+
     return jsonify({'msg': '저장완료'})
 
 @app.route('/card', methods=["GET"])
