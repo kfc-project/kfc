@@ -271,6 +271,9 @@
         .hover-ef:hover {
             cursor: pointer;
         }
+        .main_image {
+            position: static;
+        }
 
     </style>
 
@@ -364,7 +367,7 @@
         function deleteComment(event) {
             let originPwd = event.parentNode.querySelector(".inputPwd").value
             let originId = event.parentNode.querySelector(".input_id").value
-            let getpw = prompt('비밀번호 입력해주세요!')
+            let getpw = prompt('비밀번호를 입력하세요.')
 
             if (getpw === null) {
                 return
@@ -380,7 +383,7 @@
                     }
                 });
             } else {
-                alert('비밀번호가 틀렸습니다!');
+                alert('비밀번호가 다릅니다.');
             }
         }
 
@@ -469,8 +472,10 @@
 <body>
 
 <nav class="navbar">
-    <a class="navbar-brand" href="/" onclick="rogo"><img src="{{ url_for('static', filename='kfc_fin.png') }}"
-                                                         width="50%" height="20%"/></a>
+    <a class="navbar-brand" href="/" onclick="rogo">
+        <img src="{{ url_for('static', filename='kfc_fin.png') }}"  width="50%" height="20%"/></a>
+    <a class="main_image" href="/" onclick="rogo">
+        <img src="{{ url_for('static', filename='main_image.png') }}" width="100%" height="50%"/></a>
     <div class="navbar-nav">
         <a href="/" class="nav-item nav-link active">토론장로비</a>
         <a href="{{ url_for('battle_create') }}" class="nav-item nav-link">토론장생성하기</a>
