@@ -35,26 +35,26 @@ def battle_zone():
 # 왼쪽 '선택' 버튼을 눌렀을 시 작동
 @app.route('/api/select1', methods=['POST'])
 def select_btn1():
-    title_receive = request.form['title_give']
-    target_title = db.battle.find_one({'title': title_receive})
+    id = request.form['id']
+    battle = db.battle.find_one({'_id': ObjectId(id)})
 
-    current_sel1 = target_title['sel_cnt1']
+    current_sel1 = battle['sel_cnt1']
     new_sel1 = current_sel1 + 1
 
-    db.battle.update_one({'title': title_receive}, {'$set': {'sel_cnt1': new_sel1}})
+    db.battle.update_one({'_id': ObjectId(id)}, {'$set': {'sel_cnt1': new_sel1}})
     return jsonify({'msg': '선택 완료'})
 
 
 # 오른쪽 '선택' 버튼을 눌렀을 시 작동
 @app.route('/api/select2', methods=['POST'])
 def select_btn2():
-    title_receive = request.form['title_give']
-    target_title = db.battle.find_one({'title': title_receive})
+    id = request.form['id']
+    battle = db.battle.find_one({'_id': ObjectId(id)})
 
-    current_sel2 = target_title['sel_cnt2']
+    current_sel2 = battle['sel_cnt2']
     new_sel2 = current_sel2 + 1
 
-    db.battle.update_one({'title': title_receive}, {'$set': {'sel_cnt2': new_sel2}})
+    db.battle.update_one({'_id': ObjectId(id)}, {'$set': {'sel_cnt2': new_sel2}})
     return jsonify({'msg': '선택 완료'})
 
 
@@ -102,7 +102,6 @@ def show_battles():
 def read_replies():
     id = request.args.get('id')
     replies = objectIdDecoder(list(db.reply.find({'battleId': id})))
-    print(replies)
     return jsonify({'all_replies': replies})
 
 
@@ -145,13 +144,6 @@ def card_get():
     card_list = object_string(list(db.battle.find({})))
     return jsonify({'cards': card_list})
 
-# 토론장 삭제하기
-@app.route('/api/sub_delete', methods=['POST'])
-def delete_card():
-    id_receive = request.form['id_give']
-    db.battle.delete_one({'_id': ObjectId(id_receive)})
-    return jsonify({'msg': '주제가 삭제되었습니다.'})
-
 
 # 'battle_create.html' 관련 코드
 # 토론장 생성하기
@@ -160,17 +152,16 @@ def sub_create():
     title_receive = request.form['title_give']
     sub1_receive = request.form['sub1_give']
     sub2_receive = request.form['sub2_give']
-    name_receive = request.form['name_give']
-    pw_receive = request.form['pw_give']
 
     file_len = len(request.files)
     # file_len 이 0이면 JS에서 파일을 안보낸준 것!
     # 파일을 안보내줬으면 default 파일이름을 넘겨준다.
     if file_len == 0:
-        full_file_name = 'default_img_220315.jpg'  # default 파일이름 설정
+        full_file_name = 'default-challenge-img.jfif'  # default 파일이름 설정
     else:
         # 파일을 제대로 전달해줬으면 파일을 꺼내서 저장하고 파일이름을 넘겨준다.
         img_receive = request.files['img_give']
+
 
         extension = img_receive.filename.split('.')[-1]
 
@@ -190,8 +181,6 @@ def sub_create():
         'title': title_receive,
         'subject1': sub1_receive,
         'subject2': sub2_receive,
-        'name': name_receive,
-        'password': pw_receive,
         'img_src': full_file_name,
         'sel_cnt1': 0,
         'sel_cnt2': 0,
@@ -207,6 +196,7 @@ def sub_create():
 def view_cnt():
     id_receive = request.form['id_give']
     target_id = db.battle.find_one({'_id': ObjectId(id_receive)})
+
 
     current_cnt = target_id['total_cnt']
     new_cnt = current_cnt + 1

@@ -321,11 +321,11 @@
             })
         }
 
-        function select_btn1(title) {
+        function select_btn1() {
             $.ajax({
                 type: 'POST',
                 url: '/api/select1',
-                data: {title_give: title},
+                data: {id: ID},
                 success: function (response) {
                     alert(response['msg']);
                     window.location.reload()
@@ -333,11 +333,11 @@
             });
         }
 
-        function select_btn2(title) {
+        function select_btn2() {
             $.ajax({
                 type: 'POST',
                 url: '/api/select2',
-                data: {title_give: title},
+                data: {id: ID},
                 success: function (response) {
                     alert(response['msg']);
                     window.location.reload()
@@ -351,7 +351,7 @@
                 url: "/api/showbar?id=" + ID,
                 data: {},
                 success: function (response) {
-                    console.log('show_bars', response['show_bars'])
+                    {#console.log('show_bars', response['show_bars'])#}
                     let show_bar = response['show_bars']
                     let cnt1 = show_bar['sel_cnt1']
                     let cnt2 = show_bar['sel_cnt2']
