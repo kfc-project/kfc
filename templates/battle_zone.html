@@ -63,7 +63,6 @@
             display: block;
             margin: auto;
 
-            background-image: url("https://img.etoday.co.kr/pto_db/2022/01/600/20220113163505_1708181_654_654.jpg");
             background-position: center;
             background-size: cover;
         }
@@ -255,7 +254,7 @@
             color: white;
             height: 20px;
             font-size: 11px;
-            width: 28%;
+            width: 50%;
             border-radius: 5px;
             display: flex;
             justify-content: center;
@@ -271,26 +270,62 @@
         .hover-ef:hover {
             cursor: pointer;
         }
-        .main_image {
-            position: static;
-        }
 
     </style>
 
     <script>
         $(document).ready(function () {
             show_bar();
+            showBattle();
         });
 
         $(document).ready(function () {
             showReply();
         });
 
-        function select_btn1(title) {
+        let SUBJECT1 = ""
+        let SUBJECT2 = ""
+
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const ID = urlParams.get('id')
+
+        function showBattle() {
+            $.ajax({
+                type: "GET",
+                url: "/api/server_create?id=" + ID,
+                data: {},
+                success: function (response) {
+                    console.log(response['show_battles'])
+                    let battles = response['show_battles']
+                    let title = battles['title']
+                    let subject1 = battles['subject1']
+                    let subject2 = battles['subject2']
+                    let img_src = battles['img_src']
+                    SUBJECT1=subject1
+                    SUBJECT2=subject2
+
+                    let temp_html = `
+                                             <h1 id="title">${title}</h1>
+                                             <div><img class="gg-img" src="../static/${img_src}"</div>
+                                             <div class="sec-title">
+                                                <p id="cont1">${subject1}</p>
+                                                <p id="cont2">${subject2}</p>
+                                             </div>
+                                            `
+                    $('#wrap1').append(temp_html)
+                    $('#check1').text(subject1)
+                    $('#check2').text(subject2)
+                }
+
+            })
+        }
+
+        function select_btn1() {
             $.ajax({
                 type: 'POST',
                 url: '/api/select1',
-                data: {title_give: title},
+                data: {id: ID},
                 success: function (response) {
                     alert(response['msg']);
                     window.location.reload()
@@ -298,40 +333,48 @@
             });
         }
 
-        function select_btn2(title) {
+        function select_btn2() {
             $.ajax({
                 type: 'POST',
                 url: '/api/select2',
-                data: {title_give: title},
+                data: {id: ID},
                 success: function (response) {
                     alert(response['msg']);
                     window.location.reload()
                 }
             });
         }
+
 
         function show_bar() {
             $.ajax({
                 type: 'GET',
-                url: '/api/showbar',
+                url: "/api/showbar?id=" + ID,
                 data: {},
                 success: function (response) {
+                    {#console.log('show_bars', response['show_bars'])#}
                     let show_bar = response['show_bars']
-                    let cnt1 = show_bar[0]['sel_cnt1']
-                    let cnt2 = show_bar[0]['sel_cnt2']
-                    let percent1 = Math.round(cnt1 / (cnt1 + cnt2) * 100)
-                    let percent2 = Math.round(cnt2 / (cnt1 + cnt2) * 100)
+                    let cnt1 = show_bar['sel_cnt1']
+                    let cnt2 = show_bar['sel_cnt2']
+                    let percent1 = 50
+                    let percent2 = 50
+                    if (cnt1 !== 0 || cnt2 !== 0) {
+                        percent1 = Math.round(cnt1 / (cnt1 + cnt2) * 100)
+                        percent2 = Math.round(cnt2 / (cnt1 + cnt2) * 100)
+                    }
 
                     let temp_html = `
-                                           <div class="progress second1">
-                                                <div class="progress-bar bg-danger" role="progressbar" style="width:${percent1}%" aria-valuenow="15"
-                                                     aria-valuemin="0" aria-valuemax="100">${percent1}%
-                                                </div>
-                                                <div class="progress-bar" role="progressbar" style="width:${percent2}%" aria-valuenow="30"
-                                                     aria-valuemin="0" aria-valuemax="100">${percent2}%
-                                                </div>
-                                            </div>`
+                                                 <div class="progress second1">
+                                                  <div class="progress-bar bg-danger" role="progressbar" style="width:${percent1}%" aria-valuenow="15"
+                                                   aria-valuemin="0" aria-valuemax="100">${percent1}%
+                                                  </div>
+                                                  <div class="progress-bar" role="progressbar" style="width:${percent2}%" aria-valuenow="30"
+                                                  aria-valuemin="0" aria-valuemax="100">${percent2}%
+                                                  </div>
+                                                 </div>
 
+
+        `
                     $('#progress_bar').append(temp_html);
                 }
             });
@@ -351,27 +394,30 @@
             let Id = $("#replyId").val();
             let Password = $("#replyPassword").val();
             let Comment = $("#replyComment").val();
-            let Check = $("#replyCheck").val();
+            let Check = $("input[name='exampleRadios']:checked").val();
+            console.log('Check',Check)
 
             $.ajax({
                 type: "POST",
                 url: "/reply",
-                data: {Id_give: Id, Password_give: Password, Comment_give: Comment, Check_give: Check},
+                data: {Id_give: Id, Password_give: Password, Comment_give: Comment, Check_give: Check, battleId: ID},
                 success: function (response) {
                     alert(response["msg"]);
                     window.location.reload();
                 }
-            })
+             })
         }
 
         function deleteComment(event) {
             let originPwd = event.parentNode.querySelector(".inputPwd").value
             let originId = event.parentNode.querySelector(".input_id").value
-            let getpw = prompt('비밀번호를 입력하세요.')
+            let getpw = prompt('비밀번호 입력해주세요!')
+            console.log(getpw)
 
             if (getpw === null) {
                 return
             }
+
             if (originPwd === getpw) {
                 $.ajax({
                     type: 'POST',
@@ -383,14 +429,14 @@
                     }
                 });
             } else {
-                alert('비밀번호가 다릅니다.');
+                alert('비밀번호가 틀렸습니다!');
             }
         }
 
         function showReply() {
             $.ajax({
                 type: "GET",
-                url: "/reply",
+                url: "/reply?id="+ID,
                 data: {},
                 success: function (response) {
                     let replies = response['all_replies']
@@ -401,34 +447,65 @@
                         let Comment = replies[i]['Comment']
                         let like = replies[i]['like']
                         let date = displayedAt(replies[i]['time'])
-                        console.log(replies[i]['_id'])
+                        let Check = replies[i]['Check']
+                        let temp_html = ""
+
+                        if(Check === "subject1") {
+                            temp_html = `<div class="d-flex flex-row p-3">
+                                                        <img src="{{ url_for('static', filename='test.png') }}" width="40" height="40"
+                                                             class="rounded-circle mr-3">
+                                                        <div id="w-1000" class="w-100">
+                                                        <small class="ch-st" style="background-color: crimson;">${SUBJECT1}</small>
+                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                        <div class="d-flex flex-row align-items-center">
+                                                                        <span class="mr-2">${Id}</span>
+                                                                        <small class="sub">${date}</small>
+                                                                        <input class="inputPwd" type="hidden" value="${Password}"></input>
+                                                                        <input class="input_id" type="hidden" value="${_id}"></input>
+                                                                        <small class="c-badge"></small></div>
+                                                                        <button onclick="deleteComment(this)" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                          <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                            </div>
+                                                            <p class="text-justify comment-text mb-0">${Comment}</p>
+                                                            <div class="hover-ef d-flex flex-row user-feed">
+                                                                <a href="#" onclick="likeComment('${Id}')">
+                                                                    <span class="wish"><i class="fa fa-heart mr-2"></i>${like}</span>
+                                                                </a>
+<!--                                                                <span class="ml-3"><i class="fa fa-comments-o mr-2"></i>Reply</span>-->
+                                                            </div>
+                                                        </div>
+                                                    </div>`
+                        } else {
+                            temp_html = `<div class="d-flex flex-row p-3">
+                                                        <img src="{{ url_for('static', filename='test.png') }}" width="40" height="40"
+                                                             class="rounded-circle mr-3">
+                                                        <div id="w-1000" class="w-100">
+                                                        <small class="ch-st">${SUBJECT2}</small>
+                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                        <div class="d-flex flex-row align-items-center">
+                                                                        <span class="mr-2">${Id}</span>
+                                                                        <small class="sub">${date}</small>
+                                                                        <input class="inputPwd" type="hidden" value="${Password}"></input>
+                                                                        <input class="input_id" type="hidden" value="${_id}"></input>
+                                                                        <small class="c-badge"></small></div>
+                                                                        <button onclick="deleteComment(this)" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                          <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                            </div>
+                                                            <p class="text-justify comment-text mb-0">${Comment}</p>
+                                                            <div class="hover-ef d-flex flex-row user-feed">
+                                                                <a href="#" onclick="likeComment('${Id}')">
+                                                                    <span class="wish"><i class="fa fa-heart mr-2"></i>${like}</span>
+                                                                </a>
+<!--                                                                <span class="ml-3"><i class="fa fa-comments-o mr-2"></i>Reply</span>-->
+                                                            </div>
+                                                        </div>
+                                                    </div>`
+                        }
 
 
-                        let temp_html = `<div class="d-flex flex-row p-3">
-                                                <img src="{{ url_for('static', filename='test.png') }}" width="40" height="40"
-                                                     class="rounded-circle mr-3">
-                                                <div id="w-1000" class="w-100">
-                                                <small class="ch-st">내 애인이 내 친구의 깻잎을 떼어주면 안된다</small>
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                                <div class="d-flex flex-row align-items-center">
-                                                                <span class="mr-2">${Id}</span>
-                                                                <small class="sub">${date}</small>
-                                                                <input class="inputPwd" type="hidden" value="${Password}"></input>
-                                                                <input class="input_id" type="hidden" value="${_id}"></input>
-                                                                <small class="c-badge"></small></div>
-                                                                <button onclick="deleteComment(this)" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                  <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                    </div>
-                                                    <p class="text-justify comment-text mb-0">${Comment}</p>
-                                                    <div class="hover-ef d-flex flex-row user-feed">
-                                                        <a href="#" onclick="likeComment('${Id}')">
-                                                            <span class="wish"><i class="fa fa-heart mr-2"></i>${like}</span>
-                                                        </a>
-                                                        <span class="ml-3"><i class="fa fa-comments-o mr-2"></i>Reply</span>
-                                                    </div>
-                                                </div>
-                                            </div>`
+
                         $('#mt-2').append(temp_html)
                     }
                 }
@@ -470,11 +547,11 @@
 
 
 <body>
-
+{#나브바#}
 <nav class="navbar">
-    <a class="navbar-brand" href="/" onclick="rogo">
-        <img src="{{ url_for('static', filename='kfc_fin.png') }}"  width="50%" height="20%"/></a>
-    <a class="main_image" href="/" onclick="rogo">
+    <a class="navbar-brand" href="/" onclick="rogo"><img src="{{ url_for('static', filename='kfc_fin.png') }}"
+                                                         width="50%" height="20%"/></a>
+        <a class="main_image" href="/" onclick="rogo">
         <img src="{{ url_for('static', filename='main_image.png') }}" width="100%" height="50%"/></a>
     <div class="navbar-nav">
         <a href="/" class="nav-item nav-link active">토론장로비</a>
@@ -483,15 +560,11 @@
 </nav>
 
 <div class="wrap">
-    <h1 id="title">깻잎 논쟁!</h1>
-    <div class="gg-img"></div>
-    <div class="sec-title">
-        <p id="cont1">내 애인이 내 친구의 깻잎을 떼어줘도 된다</p>
-        <p id="cont2">내 애인이 내 친구의 깻잎을 떼어주면 안된다</p>
-    </div>
 
-    <div class="progress_wrap" id="progress_bar">
+    <div id="wrap1">
+
     </div>
+    <div class="progress_wrap" id="progress_bar"></div>
     <button class="first" onclick="select_btn1('깻잎 논쟁!')">선택</button>
     <button class="third" onclick="select_btn2('깻잎 논쟁!')">선택</button>
     <br>
@@ -514,7 +587,7 @@
                     <div class="checks" id="replyCheck">
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
-                                   value="option1" checked>
+                                   value="subject1" checked>
                             <label id="check1" class="form-check-label" for="exampleRadios1">
                                 내 애인이 내 친구의 깻잎을 떼어줘도 된다
                             </label>
@@ -522,7 +595,7 @@
                         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
-                                   value="option2">
+                                   value="subject2">
                             <label id="check2" class="form-check-label" for="exampleRadios2">
                                 내 애인이 내 친구의 깻잎을 떼어주면 안된다
                             </label>
@@ -563,8 +636,6 @@
                 </li>
             </ul>
         </nav>
-
-
     </div>
 
 </div>

@@ -34,33 +34,34 @@ def battle_zone():
 # 왼쪽 '선택' 버튼을 눌렀을 시 작동
 @app.route('/api/select1', methods=['POST'])
 def select_btn1():
-    title_receive = request.form['title_give']
-    target_title = db.battle.find_one({'title': title_receive})
+    id = request.form['id']
+    battle = db.battle.find_one({'_id': ObjectId(id)})
 
-    current_sel1 = target_title['sel_cnt1']
+    current_sel1 = battle['sel_cnt1']
     new_sel1 = current_sel1 + 1
 
-    db.battle.update_one({'title': title_receive}, {'$set': {'sel_cnt1': new_sel1}})
+    db.battle.update_one({'_id': ObjectId(id)}, {'$set': {'sel_cnt1': new_sel1}})
     return jsonify({'msg': '선택 완료'})
 
 
 # 오른쪽 '선택' 버튼을 눌렀을 시 작동
 @app.route('/api/select2', methods=['POST'])
 def select_btn2():
-    title_receive = request.form['title_give']
-    target_title = db.battle.find_one({'title': title_receive})
+    id = request.form['id']
+    battle = db.battle.find_one({'_id': ObjectId(id)})
 
-    current_sel2 = target_title['sel_cnt2']
+    current_sel2 = battle['sel_cnt2']
     new_sel2 = current_sel2 + 1
 
-    db.battle.update_one({'title': title_receive}, {'$set': {'sel_cnt2': new_sel2}})
+    db.battle.update_one({'_id': ObjectId(id)}, {'$set': {'sel_cnt2': new_sel2}})
     return jsonify({'msg': '선택 완료'})
 
 
 # Progress Bar 표출
 @app.route('/api/showbar', methods=['GET'])
 def show_bar():
-    bar = list(db.battle.find({'title': '깻잎 논쟁!'}, {'_id': False}))
+    id = request.args.get('id')
+    bar = db.battle.find_one({'_id': ObjectId(id)}, {'_id': False})
     return jsonify({'show_bars': bar})
 
 
@@ -72,6 +73,7 @@ def write_reply():
     Comment_receive = request.form['Comment_give']
     Check_receive = request.form['Check_give']
     time_receive = datetime.now()
+    battleId = request.form['battleId']
 
     doc = {
         'Id': Id_receive,
@@ -79,18 +81,26 @@ def write_reply():
         'Comment': Comment_receive,
         'like': 0,
         'Check': Check_receive,
-        'time': time_receive
+        'time': time_receive,
+        'battleId': battleId
     }
     db.reply.insert_one(doc)
 
     return jsonify({'msg': '댓글 저장 완료!'})
 
+# 배틀 타이틀 가져오기
+@app.route('/api/server_create', methods=['GET'])
+def show_battles():
+    id = request.args.get('id')
+    battles = db.battle.find_one({'_id': ObjectId(id)})
+    battles['_id'] = str(battles['_id'])
+    return jsonify({'show_battles': battles})
 
 # 댓글 DB 가져오기
 @app.route('/reply', methods=['GET'])
 def read_replies():
-    replies = objectIdDecoder(list(db.reply.find({})))
-    print(replies)
+    id = request.args.get('id')
+    replies = objectIdDecoder(list(db.reply.find({'battleId': id})))
     return jsonify({'all_replies': replies})
 
 

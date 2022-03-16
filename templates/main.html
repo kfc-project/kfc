@@ -32,20 +32,20 @@
         }
 
         .wrap {
-            width: 100%;
-            margin: auto;
+            margin: 50px auto 50px auto;
+            width: 95%;
+
         }
 
         .card {
-            width: 300px;
-            height: 350px;
+            width: 450px;
+            height: 400px;
             float: left;
             margin-left: 35px;
             margin-top: 60px;
             text-align: center;
             background-color: #F3D2834D;
-            border-radius: 50px;
-            border: 0px;
+            border-radius: 20px;
             position: static;
         }
 
@@ -60,10 +60,10 @@
         .btndgo {
             font-size: 12px;
             background-color: #F3D283;
-            border-radius: 10px;
-            border: 1px solid white;
+            border-radius: 5px;
+            border: 1px solid #343302;
             margin-left: 20px;
-            padding: 2px;
+            padding: 5px;
             text-align: center;
             vertical-align: center;
         }
@@ -87,13 +87,12 @@
         }
 
         .card-img {
-            width: 230px;
-            height: 150px;
+            width: 300px;
+            height: 200px;
             object-fit: cover;
             background-position: center;
             background-size: cover;
             border-radius: 5px;
-            border: 2px solid #F3D283;
             margin-bottom: 5px;
             margin-top: 5px;
         }
@@ -145,11 +144,12 @@
                 data: {id_give: id},
                 success: function (response) {
                     alert(response['msg']);
-                    window.location.href = 'battle_zone';
+                    window.location.href = 'battle_zone?id='+id;
                 }
             });
 
         }
+
 
         function delete_card(event) {
             let id = event.parentNode.querySelector(".input_bid").value;
@@ -192,7 +192,7 @@
                         let img = card[i]['img_src']
 
 
-                        let temp_html = `<div class="card mb-3" style="max-width: 18rem;">
+                        let temp_html = `<div class="card mb-3">
                                             <div class="card-body">
                                                 <button onclick="delete_card(this)" type="button" class="close" data-dismiss="modal">
                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span aria-hidden="true">x</span>
