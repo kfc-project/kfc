@@ -100,7 +100,7 @@ def show_battles():
 @app.route('/reply', methods=['GET'])
 def read_replies():
     id = request.args.get('id')
-    replies = objectIdDecoder(list(db.reply.find({'battleId': id})))
+    replies = objectIdDecoder(list(db.reply.find({'battleId': id}).sort('like', -1)))
     return jsonify({'all_replies': replies})
 
 
